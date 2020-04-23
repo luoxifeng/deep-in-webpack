@@ -1,8 +1,9 @@
 const webpack = require('webpack');
+// const { resolve } = require('path');
+const shell = require('shelljs');
 const config = require('./webpack.config');
 
-webpack(config, function (err, stats) {
-    console.log(`编译回调+++++++`, stats);
-});
+shell.rm('-rf', config.output.path);
+webpack(config);
 
 console.log('---------');
