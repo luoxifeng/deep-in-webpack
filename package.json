@@ -9,7 +9,11 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^4.0.0",
     "shelljs": "^0.8.3",
     "webpack": "^4.43.0"
+  },
+  "bin": {
+    "deepin": "bin/index.js"
   }
 }
