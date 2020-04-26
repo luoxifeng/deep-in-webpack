@@ -32,8 +32,8 @@ module.exports = {
         function () {
             this.hooks.entryOption.tap('entryOption', function (context, entryOption) {
                 console.log(`compiler call plugins: ${chalk.yellow('test compiler entryOption hooks apply')}`);
-                console.log(delete entryOption.home);
-                entryOption.detail = ['./src/detail/index.js'];
+                // console.log(delete entryOption.home);
+                // entryOption.detail = ['./src/detail/index.js'];
             })
         },
 
