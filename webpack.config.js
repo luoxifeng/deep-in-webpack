@@ -8,7 +8,7 @@ module.exports = {
     devtool: 'none',
     watch: true,
     entry: {
-        home: './src/home/index.js',
+        // home: ['./src/home/deps.js', './src/home/index.js'],
         list: './src/list/index.js'
     },
     output: {
@@ -21,7 +21,10 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                use: './webpack/loaders/test-loader'
+                use: [
+                    './webpack/loaders/test-loader',
+                    './webpack/loaders/dd-loader',
+                ]
             }
         ]
     },
@@ -104,6 +107,33 @@ module.exports = {
         function () {
             this.hooks.compilation.tap('compilation', function () {
                 console.log(`compiler call plugins: ${chalk.yellow('test compiler compilation hooks apply')}`);
+            })
+        },
+
+         /**
+         * addEntry
+         */
+        function () {
+            this.hooks.make.tap('make', function (compilation) {
+                console.log('make');
+                compilation.hooks.addEntry.tap("addEntry", (entry, name) => {
+                    console.log(`compiler call plugins: ${chalk.yellow('test compiler addEntry hooks apply')}`);
+                    console.log('addEntry', entry, name);
+                })
+            })
+        },
+
+        
+
+        /**
+         * buildModule
+         */
+        function () {
+            this.hooks.make.tap('make', function (compilation) {
+                compilation.hooks.buildModule.tap("buildModule", (module) => {
+                    console.log(`compiler call plugins: ${chalk.yellow('test compiler buildModule hooks apply')}`);
+                    console.log('构建module', module);
+                })
             })
         },
 
