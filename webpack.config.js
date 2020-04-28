@@ -122,9 +122,7 @@ module.exports = {
                 })
             })
         },
-
         
-
         /**
          * buildModule
          */
@@ -136,6 +134,20 @@ module.exports = {
                 })
             })
         },
+
+        /**
+         * succeedModule
+         */
+        function () {
+            this.hooks.make.tap('make', function (compilation) {
+                compilation.hooks.succeedModule.tap("succeedModule", (module) => {
+                    console.log(`compiler call plugins: ${chalk.yellow('test compiler succeedModule hooks apply')}`);
+                    console.log('module 构建完成', module.context, );
+                })
+            })
+        },
+
+        
 
         /**
          * afterCompile
