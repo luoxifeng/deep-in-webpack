@@ -15,5 +15,8 @@
   },
   "bin": {
     "deepin": "bin/index.js"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^4.5.0"
   }
 }

@@ -1,5 +1,7 @@
 const { resolve } = require('path');
 const chalk = require('chalk');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 
 
 module.exports = {
@@ -179,6 +181,8 @@ module.exports = {
             this.hooks.done.tap('done', function () {
                 console.log(`compiler call plugins: ${chalk.yellow('test compiler done hooks apply')}`);
             })
-        }
+        },
+
+        new HtmlWebpackPlugin()
     ]
 }
