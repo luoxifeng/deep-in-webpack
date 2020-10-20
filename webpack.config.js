@@ -182,16 +182,17 @@ module.exports = {
                 console.log(`compiler call plugins: ${chalk.yellow('test compiler done hooks apply')}`);
             })
         },
+        new HtmlWebpackPlugin({
+            filename: 'prefetch.js',
+            template: './prefetch.html',
+            inject: false
+        }),
 
         new HtmlWebpackPlugin({
             scripts: [
                 'http://example.com/somescript.js',
             ],
         }),
-        new HtmlWebpackPlugin({
-            filename: 'prefetch.js',
-            template: './prefetch.html',
-            inject: false
-        })
+       
     ]
 }
