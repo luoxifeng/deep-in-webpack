@@ -183,6 +183,15 @@ module.exports = {
             })
         },
 
-        new HtmlWebpackPlugin()
+        new HtmlWebpackPlugin({
+            scripts: [
+                'http://example.com/somescript.js',
+            ],
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'prefetch.js',
+            template: './prefetch.html',
+            inject: false
+        })
     ]
 }

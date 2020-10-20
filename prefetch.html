@@ -1,0 +1,28 @@
+(function(opts) {
+    var fragment = document.createDocumentFragment();
+    function createLink(opt) {
+        var link = document.createElement('link');
+        for (var key in opt) {
+            if (opt.hasOwnProperty('key')) {
+                link.setAttribute(key, opt[key]);
+            }
+        }
+        fragment.appendChild(link);
+    }
+    for(var i in opts.js) {
+        createLink({ 
+            crossorigin: "crossorigin",
+            rel: "prefetch",
+            as: "script",
+            href: opts.js[i]
+        });
+    }
+    var head = document.head;
+    if (!head) {
+        var heads = document.getElementsByTagName();
+        head = heads && heads[0];
+    }
+    if (head) {
+        head.appendChild(fragment);  
+    }
+})(<%= JSON.stringify(htmlWebpackPlugin.files) %>);
