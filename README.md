@@ -8,6 +8,6 @@
 - webpack用到的三方库
 
 ## loader
- vue-loader
+- vue-loader
  
 ## HMR
