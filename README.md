@@ -7,12 +7,12 @@
 - [如何加载处理配置](./docs/如何加载处理配置/加载配置.md)
 - webpack用到的三方库
 
-## loader
+## Loader
 - vue-loader
  
 ## HMR
 
-## hooks
+## Hooks
 - compiler
   -  初始化阶段
   -  编译阶段
