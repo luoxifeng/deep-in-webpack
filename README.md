@@ -13,9 +13,8 @@
 ## HMR
 
 ## hooks
-<details>
- <summary>compiler</summary>
- - 初始化阶段
- - 编译阶段
- - 生成产物阶段
-</details>
+- compiler
+ -  初始化阶段
+ -  编译阶段
+ -  生成产物阶段
+
