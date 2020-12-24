@@ -30,7 +30,14 @@
   initialize
   beforeCompile
   ```
+  
   -  编译阶段
+  ```
+  compile
+  thisCompilation
+  compilation
+  make
+  ```
   
   -  生成产物阶段
 
