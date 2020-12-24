@@ -15,6 +15,22 @@
 ## Hooks
 - compiler
   -  初始化阶段
+  ```
+  entryOption
+  afterPlugins
+  afterResolvers
+  environment
+  afterEnvironment
+  beforeRun
+  additionalPass
+  run
+  watchRun
+  normalModuleFactory
+  contextModuleFactory
+  initialize
+  beforeCompile
+  ```
   -  编译阶段
+  
   -  生成产物阶段
 
