@@ -40,4 +40,17 @@
   ```
   
   -  生成产物阶段
+  ```
+  afterCompile
+  shouldEmit
+  emit
+  afterEmit
+  assetEmitted
+  done
+  failed
+  invalid
+  watchClose
+  infrastructureLog
+  log
+  ```
 
