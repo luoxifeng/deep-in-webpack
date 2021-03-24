@@ -1,22 +1,31 @@
 const { resolve } = require('path');
 const chalk = require('chalk');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+
 
 
 
 module.exports = {
   context: resolve(__dirname, './'),
   mode: 'development',
-  devtool: 'none',
+  devtool: 'source-map',
   watch: true,
   entry: {
     // home: ['./src/home/deps.js', './src/home/index.js'],
     list: './src/list/index.js'
   },
+  // target: 'web',
   output: {
     path: resolve(__dirname, './dist'),
     filename: '[name].js',
-    publicPath: './'
+    publicPath: './',
+    chunkLoadTimeout: 1000 * 1000,
+    chunkFilename: '[id].[chunkhash].js',
+    // jsonpScriptType: 'text/javascript',
+    crossOriginLoading: 'anonymous',
+
+    // chunkLoadingGlobal: 'myCustomFunc'
     // library: '__MY_LIB__'
   },
   module: {
@@ -43,6 +52,10 @@ module.exports = {
       filename: 'index.html',
       template: './index.html',
       inject: true
+    }),
+
+    new webpack.DefinePlugin({
+      'testDefine': JSON.stringify(true)
     }),
 
   ],

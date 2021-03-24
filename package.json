@@ -19,12 +19,12 @@
     "core-js": "^3.9.1",
     "regenerator-runtime": "^0.13.7",
     "shelljs": "^0.8.3",
-    "webpack": "^4.43.0"
+    "webpack": "^5.26.3"
   },
   "bin": {
     "deepin": "bin/index.js"
   },
   "devDependencies": {
-    "html-webpack-plugin": "^4.5.0"
+    "html-webpack-plugin": "^5.3.1"
   }
 }

@@ -15,9 +15,9 @@ module.exports = {
     ]
   ],
   plugins: [
-    ["@babel/plugin-transform-runtime", {
-      // helpers: false,
-      corejs: 3
-    }]
+    // ["@babel/plugin-transform-runtime", {
+    //   // helpers: false,
+    //   corejs: 3
+    // }]
   ]
 }

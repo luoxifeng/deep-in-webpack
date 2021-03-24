@@ -6,4 +6,4 @@ class AA {
 
 }
 
-class BB extends AA {}
+export class BB extends AA {}

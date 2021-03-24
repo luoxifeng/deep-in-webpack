@@ -6,7 +6,7 @@ const config = require('./webpack.config');
 
 // const Webpack = util.promisify(webpack)
 
-// shell.rm('-rf', config.output.path);
+shell.rm('-rf', config.output.path);
 
 global.watch = webpack(config, (error, stats) => {
     if (error) {
