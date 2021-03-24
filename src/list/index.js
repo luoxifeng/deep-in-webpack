@@ -16,15 +16,15 @@ document.body.addEventListener('click', () => {
 })
 
 
-import(//
-    /* webpackChunkName: "ssss/common" */
-  './foo'
-  ).then(() => {})
+// import(//
+//     /* webpackChunkName: "ssss/common" */
+//   './foo'
+//   ).then(() => {})
 
 
 
 
-  console.log(__webpack_require__.m , '__webpack_require__.m ')
+  console.log(__webpack_require__.m , '__webpack_require__.m111111 ')
 const { kkk } = __webpack_require__('kk');
 console.log(kkk, '====0111111===')
 

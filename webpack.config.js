@@ -2,6 +2,7 @@ const { resolve } = require('path');
 const chalk = require('chalk');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const InjectPrependChunkPlugin = require('./webpack/plugins/InjectPrependChunkPlugin');
 
 
 
@@ -17,11 +18,11 @@ module.exports = {
   },
   // target: 'web',
   output: {
-    path: resolve(__dirname, './dist'),
-    filename: '[name].js',
+    path: resolve(__dirname, './sdist'),
+    filename: '[name].[chunkhash:8].js',
     publicPath: './',
     chunkLoadTimeout: 1000 * 1000,
-    chunkFilename: '[id].[chunkhash].js',
+    chunkFilename: '[id].[chunkhash:8].js',
     // jsonpScriptType: 'text/javascript',
     crossOriginLoading: 'anonymous',
 
@@ -48,10 +49,14 @@ module.exports = {
     ]
   },
   plugins: [
+    new InjectPrependChunkPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './index.html',
-      inject: true
+      inject: true,
+      externalScripts: {
+        inject: `<script>var g = 123</script>`,
+      }
     }),
 
     new webpack.DefinePlugin({
