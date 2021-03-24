@@ -1,9 +1,9 @@
 /* eslint-disable */
-const { 
-  ConcatSource, 
-  CachedSource, 
-  RawSource, 
-  OriginalSource 
+const {
+  ConcatSource,
+  CachedSource,
+  RawSource,
+  OriginalSource
 } = require('webpack-sources')
 const { Compilation } = require('webpack');
 
@@ -11,47 +11,76 @@ module.exports = class InjectPrependChunkPlugin {
   constructor(options) {
     this.options = options
   }
-  
+
   apply(compiler) {
     // this.options.
-    compiler.hooks.compilation.tap('InjectPrependChunkPlugin', (compilation) => {
-      compilation.hooks.processAssets.tap(
-        {
-          name: 'InjectPrependChunkPlugin',
-          stage: Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL,
-          additionalAssets: true
-        },
-        assets => {
-          const key = Object.keys(assets).find(key => /list.*?\.js$/.test(key))
-          if (assets[key]) {
-            const origin = assets[key]._source.source();
+    compiler.hooks.compilation.tap('InjectPrependChunkPlugin', compilation => {
 
-            const concatSource = assets[key]._source;
-            const _children = concatSource._children;
-            console.log(concatSource)
-            console.log('_children[0]', _children[1])
-            _children.splice(1, 0, new OriginalSource('11111111'), new OriginalSource('sfsf.gb = '))
+      compilation.hooks.record.tap('InjectPrependChunkPlugin', (compilation1, records) => {
+        // console.log('reviveChunks', ...args)
+        console.log('\nrecord', 'start\n')
 
-            // console.log('_children', _children)
+        // console.log(records, compilation1.assets)
 
-            // assets[key]._source = new ConcatSource('你好吗;', ..._children)
-            // assets[key]._source.add('sfsfsdfsdfsdf')
+        console.log('\nrecord', 'end\n')
 
-            // console.log('=====', assets[key]);
+        // compilation1.createHash()
 
-            // console.log(assets[key]._source.a);
 
-            // console.log(assets[key]._source);
+        // const assets = compilation.assets;
+        // // console.log('record', compilation.assets)
 
-            // assets[key] = new CachedSource(new OriginalSource('你好吗;' + origin, key))
-            // assets[key].updateHash()
-            // console.log(assets[key]);
+        // const key = Object.keys(assets).find(key => /list.*?\.js$/.test(key))
+        // if (assets[key]) {
+        //   console.log(assets[key]);
+        // }
 
-            // console.log(assets[key]._source);
-            // console.log(assets[key]._source);
-          }
+
+      })
+      // return
+      compilation.hooks.additionalChunkAssets.tapAsync(
+        'InjectPrependChunkPlugin',
+        (chunks, callback) => {
+        const assets = compilation.assets;
+
+        const key = Object.keys(assets).find(key => /list.*?\.js$/.test(key))
+        if (assets[key]) {
+          // console.log(assets[key]);
+          const g = assets[key]._source;
+          assets[key]._source = new ConcatSource(
+            '/**Sweet Banner**/',
+            '\n',
+            'var g = 123',
+            '\n',
+            g
+          );
+
+          // console.log('====', compilation.createHash())
+
+          // assets[key].updateHash();
+        }
+          // console.log('additionalChunkAssets', 'start\n')
+          // console.log('additionalChunkAssets', compilation.assets)
+          // chunks.forEach((chunk) => {
+          //   chunk.files.forEach((file) => {
+          //     console.log('file', file);
+
+          //     compilation.assets[file] = new ConcatSource(
+          //       '/**Sweet Banner**/',
+          //       '\n',
+          //       'var g = 123',
+          //       '\n',
+          //       compilation.assets[file]
+          //     );
+          //   });
+          // })
+          console.log('additionalChunkAssets', 'end\n')
+
+          callback && callback();
         }
       )
     })
+
   }
 }
+

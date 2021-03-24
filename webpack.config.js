@@ -19,15 +19,18 @@ module.exports = {
   // target: 'web',
   output: {
     path: resolve(__dirname, './sdist'),
-    filename: '[name].[chunkhash:8].js',
+    filename: '[name].[contenthash:8].js',
     publicPath: './',
     chunkLoadTimeout: 1000 * 1000,
-    chunkFilename: '[id].[chunkhash:8].js',
+    // chunkFilename: '[id].[chunkhash:8].js',
     // jsonpScriptType: 'text/javascript',
     crossOriginLoading: 'anonymous',
 
     // chunkLoadingGlobal: 'myCustomFunc'
     // library: '__MY_LIB__'
+  },
+  optimization: {
+    runtimeChunk: 'single',
   },
   module: {
     rules: [
