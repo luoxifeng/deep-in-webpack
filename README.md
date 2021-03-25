@@ -1,10 +1,9 @@
 # deep-in-webpack
 
 
-## 文档
+## 流程
+- [加载配置启动](./docs/流程/加载配置启动.md)
 
-- [如何加载处理配置](./docs/如何加载处理配置/加载配置.md)
-- webpack用到的三方库
 
 ## Loader
 - vue-loader
@@ -12,6 +11,8 @@
 ## [Plugins](/tree/master/docs/PLugins)
 
 ## HMR
+
+## webpack用到的三方库
 
 ## Hooks
 - compiler
