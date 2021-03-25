@@ -5,6 +5,9 @@ const NormalModule = require('webpack/lib/NormalModule');
 
 const { beforeRunHook, emitHook, getCompilerHooks, normalModuleLoaderHook } = require('./hooks');
 
+/**
+ * 记录生成manifest次数
+ */
 const emitCountMap = new Map();
 
 const defaults = {
@@ -27,7 +30,9 @@ const defaults = {
 };
 
 class WebpackManifestPlugin {
+
   constructor(opts) {
+    // 合并默认配置
     this.options = Object.assign({}, defaults, opts);
   }
 
@@ -57,6 +62,7 @@ class WebpackManifestPlugin {
       hook.tap(hookOptions, normalModuleLoader);
     });
 
+    // webpack4使用旧的hooks
     if (webpack.version.startsWith('4')) {
       compiler.hooks.emit.tap(hookOptions, emit);
     } else {
@@ -65,6 +71,11 @@ class WebpackManifestPlugin {
       });
     }
 
+    /**
+     * 这两个钩子只有一个钩子会被调用
+     * 如果是watch模式下watchRun会被调用
+     * 否则run钩子会被调用
+     */
     compiler.hooks.run.tap(hookOptions, beforeRun);
     compiler.hooks.watchRun.tap(hookOptions, beforeRun);
   }

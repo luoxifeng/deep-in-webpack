@@ -7,9 +7,18 @@ const webpack = require('webpack');
 const { RawSource } = webpack.sources || require('webpack-sources');
 
 const { generateManifest, reduceAssets, reduceChunk, transformFiles } = require('./helpers');
+const { ConcatSource } = require('webpack-sources');
 
 const compilerHookMap = new WeakMap();
 
+/**
+ * 通过Map设置hooks
+ * 提供给外部插件获取manifest的机会
+ * 钩子是SyncWaterfallHook必须有返回值
+ * 外部可以通过订阅这些钩子获取manifest而不用自己写
+ * 或者处理获取manifest的过程
+ * @param {*} compiler 
+ */
 const getCompilerHooks = (compiler) => {
   let hooks = compilerHookMap.get(compiler);
   if (typeof hooks === 'undefined') {
@@ -22,6 +31,12 @@ const getCompilerHooks = (compiler) => {
   return hooks;
 };
 
+/**
+ * 记录编译的次数
+ * @param {*} param0 
+ * @param {*} compiler 
+ * @param {*} callback 
+ */
 const beforeRunHook = ({ emitCountMap, manifestFileName }, compiler, callback) => {
   const emitCount = emitCountMap.get(manifestFileName) || 0;
   emitCountMap.set(manifestFileName, emitCount + 1);
@@ -32,6 +47,12 @@ const beforeRunHook = ({ emitCountMap, manifestFileName }, compiler, callback) =
   }
 };
 
+/**
+ * 
+ * @param {*} param0 
+ * @param {*} compilation 
+ * 生成文件阶段会被调用
+ */
 const emitHook = function emit(
   { compiler, emitCountMap, manifestAssetId, manifestFileName, moduleAssets, options },
   compilation
@@ -86,6 +107,9 @@ const emitHook = function emit(
   let manifest = generateManifest(compilation, files, options);
   const isLastEmit = emitCount === 0;
 
+  /**
+   * 生成前调用外部注册的钩子
+   */
   manifest = getCompilerHooks(compiler).beforeEmit.call(manifest);
 
   if (isLastEmit) {
@@ -110,6 +134,9 @@ const emitHook = function emit(
     }
   }
 
+  /**
+   * 生成后调用外部注册的钩子
+   */
   getCompilerHooks(compiler).afterEmit.call(manifest);
 };
 

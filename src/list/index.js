@@ -11,7 +11,7 @@ document.body.addEventListener('click', () => {
    /* webpackPrefetch: true */
   './moo'
   ).then(() => {
-    console.log('./moo loaded');
+    console.log('./moo loadsssdsdsdd');
   })
 })
 

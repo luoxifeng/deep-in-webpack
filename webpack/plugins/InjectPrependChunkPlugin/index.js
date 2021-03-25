@@ -16,27 +16,27 @@ module.exports = class InjectPrependChunkPlugin {
     // this.options.
     compiler.hooks.compilation.tap('InjectPrependChunkPlugin', compilation => {
 
-      compilation.hooks.record.tap('InjectPrependChunkPlugin', (compilation1, records) => {
-        // console.log('reviveChunks', ...args)
-        console.log('\nrecord', 'start\n')
+      // compilation.hooks.record.tap('InjectPrependChunkPlugin', (compilation1, records) => {
+      //   // console.log('reviveChunks', ...args)
+      //   console.log('\nrecord', 'start\n')
 
-        // console.log(records, compilation1.assets)
+      //   // console.log(records, compilation1.assets)
 
-        console.log('\nrecord', 'end\n')
+      //   console.log('\nrecord', 'end\n')
 
-        // compilation1.createHash()
-
-
-        // const assets = compilation.assets;
-        // // console.log('record', compilation.assets)
-
-        // const key = Object.keys(assets).find(key => /list.*?\.js$/.test(key))
-        // if (assets[key]) {
-        //   console.log(assets[key]);
-        // }
+      //   // compilation1.createHash()
 
 
-      })
+      //   // const assets = compilation.assets;
+      //   // // console.log('record', compilation.assets)
+
+      //   // const key = Object.keys(assets).find(key => /list.*?\.js$/.test(key))
+      //   // if (assets[key]) {
+      //   //   console.log(assets[key]);
+      //   // }
+
+
+      // })
 
       // compilation.hooks.beforeHash.tap('sfsfs', (chunk, chunkHash) => {
       //   console.log('====', compilation.chunks)
@@ -46,10 +46,12 @@ module.exports = class InjectPrependChunkPlugin {
       compilation.hooks.processAssets.tap(
         {
           name: 'MyPlugin',
-          stage: Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE,
+          stage: Compilation.PROCESS_ASSETS_STAGE_DERIVED,
           additionalAssets: true,
         },
         (assets, callback) => {
+
+
         // const assets = compilation.assets;
 
         // console.log('assets', compilation.chunks[0].updateHash)
@@ -80,21 +82,29 @@ module.exports = class InjectPrependChunkPlugin {
         // return 
         const key = Object.keys(assets).find(key => /list.*?\.js$/.test(key))
         if (assets[key]) {
+
+
           // console.log(assets[key]);
           const g = assets[key]._source;
           // console.log('assets[key]._source before', assets[key]._source)
-          assets[key]._source = new ConcatSource(
+          // assets[key]._source = new ConcatSource(
+          //   '/**Sweet Banner**/',
+          //   '\n',
+          //   'var g = 123452',
+          //   '\n',
+          //   g
+          // );
+
+          compilation.updateAsset(key, new CachedSource(new ConcatSource(
             '/**Sweet Banner**/',
             '\n',
-            'var g = 12345',
+            'var g = 123452',
             '\n',
             g
-          );
+          )))
 
           console.log('assets[key]._source', assets[key]._source)
 
-
-          
           // console.log('hash', compilation.mainTemplate.outputOptions.hashFunction)
 
           // console.log('assets[key]._source after', assets[key]._source)

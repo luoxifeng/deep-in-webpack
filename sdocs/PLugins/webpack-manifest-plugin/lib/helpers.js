@@ -87,7 +87,9 @@ const transformFiles = (files, options) =>
   ['filter', 'map', 'sort']
     .filter((fname) => !!options[fname])
     // TODO: deprecate these
-    .reduce((prev, fname) => prev[fname](options[fname]), files)
+    .reduce((prev, fname) => {
+      return  prev[fname](options[fname])
+    }, files)
     .map(standardizeFilePaths);
 
 module.exports = { generateManifest, reduceAssets, reduceChunk, transformFiles };
