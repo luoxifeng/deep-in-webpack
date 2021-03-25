@@ -8,7 +8,7 @@
 ## Loader
 - vue-loader
 
-## [Plugins](/tree/master/docs/PLugins)
+## [Plugins](./docs/PLugins)
 
 ## HMR
 
