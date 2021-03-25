@@ -1,13 +1,19 @@
-# deep-in-webpack
-
-
-## 流程
+# Deep In Webpack
 ```
-webpack构建整个流程
+基于webpack5
 ```
 
+## Runtime
+```
+webpack构建出的代码，包含的runtime。如何装载，建立模块的关联，引用关系，以及导出。。。
+```
 
-## Loader
+## [Process](./docs/Process)
+```
+webpack构建流程
+```
+
+## [Loader](./docs/Loader)
 ```
 loader执行过程以及常用loader
 ```
@@ -17,10 +23,14 @@ loader执行过程以及常用loader
 常用plugins
 ```
 
-## 三方库
+## Third party libs
 ```
 用到的三方库以及从webpack流程专门剥离出去的库
 ```
+
+
+
+## Optimization
 
 ## Hooks
 - compiler
