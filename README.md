@@ -9,7 +9,7 @@
 ## Loader
 - vue-loader
 
-## [Plugins](./docs/Plugins/README.md)
+## [Plugins](/tree/master/docs/PLugins)
 
 ## HMR
 
