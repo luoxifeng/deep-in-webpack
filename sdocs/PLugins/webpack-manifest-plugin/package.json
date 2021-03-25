@@ -1,0 +1,130 @@
+{
+  "_from": "webpack-manifest-plugin",
+  "_id": "webpack-manifest-plugin@3.1.0",
+  "_inBundle": false,
+  "_integrity": "sha1-kDC4g5vtCT2TkwqdHTp6sA96xPc=",
+  "_location": "/webpack-manifest-plugin",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "webpack-manifest-plugin",
+    "name": "webpack-manifest-plugin",
+    "escapedName": "webpack-manifest-plugin",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "http://npm.devops.xiaohongshu.com:7001/webpack-manifest-plugin/download/webpack-manifest-plugin-3.1.0.tgz",
+  "_shasum": "9030b8839bed093d93930a9d1d3a7ab00f7ac4f7",
+  "_spec": "webpack-manifest-plugin",
+  "_where": "/Users/chongyang/github/deep-in-webpack",
+  "author": {
+    "name": "Dane Thurber",
+    "email": "dane.thurber@gmail.com"
+  },
+  "ava": {
+    "files": [
+      "!**/fixtures/**",
+      "!**/helpers/**",
+      "!**/output/**"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/shellscape/webpack-manifest-plugin/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "tapable": "^2.0.0",
+    "webpack-sources": "^2.2.0"
+  },
+  "deprecated": false,
+  "description": "A Webpack Plugin for generating Asset Manifests",
+  "devDependencies": {
+    "@ava/babel": "^1.0.1",
+    "@svgr/webpack": "^5.4.0",
+    "ava": "^3.13.0",
+    "codecov": "^3.1.0",
+    "copy-webpack-plugin": "^6.2.1",
+    "css-loader": "^1.0.0",
+    "del": "^6.0.0",
+    "eslint-config-shellscape": "^2.1.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^2.0.0",
+    "lint-staged": "^10.4.0",
+    "memory-fs": "^0.4.1",
+    "nyc": "^15.1.0",
+    "pre-commit": "^1.2.2",
+    "prettier": "^2.1.2",
+    "prettier-plugin-package": "^1.2.0",
+    "react": "^16.3.2",
+    "style-loader": "^0.23.0",
+    "webpack": "^4.44.2",
+    "webpack-merge": "^5.2.0"
+  },
+  "engines": {
+    "node": ">=10.22.1"
+  },
+  "files": [
+    "lib",
+    "README.md",
+    "LICENSE"
+  ],
+  "homepage": "https://github.com/shellscape/webpack-manifest-plugin",
+  "jest": {
+    "testEnvironment": "node",
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
+  },
+  "license": "MIT",
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix"
+    ]
+  },
+  "main": "lib/index.js",
+  "maintainers": [
+    {
+      "name": "Andrew Powell",
+      "email": "andrew@shellscape.org"
+    }
+  ],
+  "name": "webpack-manifest-plugin",
+  "nyc": {
+    "include": [
+      "lib/*.js"
+    ],
+    "exclude": [
+      "test/"
+    ]
+  },
+  "peerDependencies": {
+    "webpack": ">=4.44.2"
+  },
+  "pre-commit": "lint-staged",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shellscape/webpack-manifest-plugin.git"
+  },
+  "scripts": {
+    "ci:coverage": "nyc npm run ci:test && nyc report --reporter=text-lcov > coverage.lcov",
+    "ci:lint": "npm run lint && npm run security",
+    "ci:test": "npm run test -- --verbose",
+    "lint": "npm run lint:docs && npm run lint:json && npm run lint:package && npm run lint:js",
+    "lint-staged": "lint-staged",
+    "lint:docs": "prettier --single-quote --arrow-parens avoid --trailing-comma none --write README.md",
+    "lint:js": "eslint --fix --cache lib test",
+    "lint:json": "prettier --write codecov.yml .circleci/config.yml .eslintrc",
+    "lint:package": "prettier --write package.json --plugin=prettier-plugin-package",
+    "posttest": "npm install webpack@^4.44.2",
+    "security": "npm audit --audit-level=moderate",
+    "test": "npm run test:v4",
+    "test:v4": "ava",
+    "test:v5": "npm install webpack@^5.0.0 --no-save && ava"
+  },
+  "version": "3.1.0"
+}

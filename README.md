@@ -13,17 +13,17 @@
 webpack构建出的代码，包含的runtime。如何引用模块，装载模块，定义模块导出。。。
 ```
 
-## 🚄 [Process](./docs/Process)
+## 🚄 [Process](./sdocs/Process)
 ```
 webpack构建流程。。。
 ```
 
-## 🔮 [Loader](./docs/Loader)
+## 🔮 [Loader](./sdocs/Loader)
 ```
 loader执行过程以及常用loader
 ```
 
-## 🛠 [Plugins](./docs/PLugins)
+## 🛠 [Plugins](./sdocs/PLugins)
 ```
 常用plugins, 包含内部使用的，暴露给外用使用，以及第三方plugin
 ```

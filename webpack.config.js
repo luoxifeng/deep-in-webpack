@@ -2,10 +2,11 @@ const { resolve } = require('path');
 const chalk = require('chalk');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
-const InjectPrependChunkPlugin = require('./webpack/plugins/InjectPrependChunkPlugin');
-const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+const requireDocPlugin = plugin => require(`./docs/PLugins/${plugin}`)
+const requireMyPlugin = plugin => require(`./webpack/plugins/${plugin}`)
 
-
+const { WebpackManifestPlugin } = requireDocPlugin('webpack-manifest-plugin');
+const InjectPrependChunkPlugin = requireMyPlugin('InjectPrependChunkPlugin');
 
 
 module.exports = {
