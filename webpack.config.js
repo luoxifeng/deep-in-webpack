@@ -3,6 +3,7 @@ const chalk = require('chalk');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const InjectPrependChunkPlugin = require('./webpack/plugins/InjectPrependChunkPlugin');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 
 
 
@@ -52,19 +53,21 @@ module.exports = {
     ]
   },
   plugins: [
-    new InjectPrependChunkPlugin(),
+    // new InjectPrependChunkPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './index.html',
       inject: true,
-      externalScripts: {
-        inject: `<script>var g = 123</script>`,
-      }
+      // externalScripts: {
+      //   inject: `<script>var g = 123</script>`,
+      // }
     }),
 
     new webpack.DefinePlugin({
       'testDefine': JSON.stringify(true)
     }),
+
+    new WebpackManifestPlugin()
 
   ],
   // plugins: [

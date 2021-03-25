@@ -8,7 +8,9 @@
 
 ## Loader
 - vue-loader
- 
+
+## [Plugins](./docs/Plugins/README.md)
+
 ## HMR
 
 ## Hooks
