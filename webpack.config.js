@@ -8,6 +8,8 @@ const requireMyPlugin = plugin => require(`./webpack/plugins/${plugin}`)
 const { WebpackManifestPlugin } = requireDocPlugin('webpack-manifest-plugin');
 const InjectPrependChunkPlugin = requireMyPlugin('InjectPrependChunkPlugin');
 
+const port = 5000
+
 
 module.exports = {
   context: resolve(__dirname, './'),
@@ -18,10 +20,13 @@ module.exports = {
     // home: ['./src/home/deps.js', './src/home/index.js'],
     list: './src/list/index.js'
   },
+  stats: {
+    colors: true,
+  },
   // target: 'web',
   output: {
     path: resolve(__dirname, './sdist'),
-    filename: '[name].[chunkhash:8].js',
+    filename: '[name].js',
     publicPath: './',
     chunkLoadTimeout: 1000 * 1000,
     // chunkFilename: '[id].[chunkhash:8].js',
@@ -30,6 +35,18 @@ module.exports = {
 
     // chunkLoadingGlobal: 'myCustomFunc'
     // library: '__MY_LIB__'
+  },
+  experiments: {
+    lazyCompilation: true,
+  },
+  devServer: {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+    open: false,
+    port,
+    filename: '[name].js',
+    // lazy: true,
   },
   optimization: {
     runtimeChunk: 'single',
@@ -54,7 +71,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new InjectPrependChunkPlugin(),
+    // new InjectPrependChunkPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './index.html',
@@ -73,7 +90,7 @@ module.exports = {
       seed: {
         l: 123
       },
-      // writeToFileEmit: true,
+      writeToFileEmit: true,
     })
 
   ],

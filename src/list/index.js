@@ -25,8 +25,8 @@ document.body.addEventListener('click', () => {
 
 
   console.log(__webpack_require__.m , '__webpack_require__.m111111 ')
-const { kkk } = __webpack_require__('kk');
-console.log(kkk, '====0111111===')
+// const { kkk } = __webpack_require__('kk');
+// console.log(kkk, '====0111111===')
 
 
 const { kkss } = __webpack_require__('kkss');
