@@ -26,7 +26,7 @@ module.exports = {
   // target: 'web',
   output: {
     path: resolve(__dirname, './sdist'),
-    filename: '[name].js',
+    filename: '[name].[chunkhash:8].js',
     publicPath: './',
     chunkLoadTimeout: 1000 * 1000,
     // chunkFilename: '[id].[chunkhash:8].js',
@@ -36,12 +36,12 @@ module.exports = {
     // chunkLoadingGlobal: 'myCustomFunc'
     // library: '__MY_LIB__'
   },
-  experiments: {
-    lazyCompilation: {
-      imports: true,
-      entries: true,
-    },
-  },
+  // experiments: {
+  //   lazyCompilation: {
+  //     imports: true,
+  //     entries: true,
+  //   },
+  // },
   devServer: {
     headers: {
       'Access-Control-Allow-Origin': '*',
@@ -82,7 +82,7 @@ module.exports = {
     ]
   },
   plugins: [
-    // new InjectPrependChunkPlugin(),
+    new InjectPrependChunkPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './index.html',
