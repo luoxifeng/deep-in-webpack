@@ -64,21 +64,21 @@ module.exports = {
   },
   module: {
     rules: [
-      // {
-      //   test: /\.js$/,
-      //   use: [
-      //     './webpack/loaders/test-loader',
-      //     './webpack/loaders/dd-loader',
-      //   ]
-      // },
       {
         test: /\.js$/,
         use: [
-          {
-            loader: 'babel-loader',
-          }
+          './w_webpack/loaders/test-loader',
+          // './webpack/loaders/dd-loader',
         ]
-      }
+      },
+      // {
+      //   test: /\.js$/,
+      //   use: [
+      //     {
+      //       loader: 'babel-loader',
+      //     }
+      //   ]
+      // }
     ]
   },
   plugins: [
