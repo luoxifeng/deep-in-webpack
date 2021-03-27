@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const requireDocPlugin = plugin => require(`./sdocs/PLugins/${plugin}`)
-const requireMyPlugin = plugin => require(`./webpack/plugins/${plugin}`)
+const requireMyPlugin = plugin => require(`./w_webpack/plugins/${plugin}`)
 
 const { WebpackManifestPlugin } = requireDocPlugin('webpack-manifest-plugin');
 const InjectPrependChunkPlugin = requireMyPlugin('InjectPrependChunkPlugin');

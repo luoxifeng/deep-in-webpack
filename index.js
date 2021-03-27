@@ -1,4 +1,4 @@
-const webpack = require('webpack');
+const webpack = require('./webpack');
 // const { resolve } = require('path');
 const shell = require('shelljs');
 const util = require('util');
