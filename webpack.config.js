@@ -15,13 +15,13 @@ module.exports = {
   context: resolve(__dirname, './'),
   mode: 'development',
   devtool: 'source-map',
-  watch: true,
+  // watch: true,
   entry: {
     // home: ['./src/home/deps.js', './src/home/index.js'],
     list: './src/list/index.js'
   },
   stats: {
-    colors: true,
+    // colors: true,
   },
   // target: 'web',
   output: {
@@ -37,15 +37,26 @@ module.exports = {
     // library: '__MY_LIB__'
   },
   experiments: {
-    lazyCompilation: true,
+    lazyCompilation: {
+      imports: true,
+      entries: true,
+    },
   },
   devServer: {
     headers: {
       'Access-Control-Allow-Origin': '*',
     },
     open: false,
+    hot: true,
+    // index: 'index.html',
+    // inject: true,
     port,
     filename: '[name].js',
+    before(app, server, compiler) {
+      console.log(server)
+
+
+    }
     // lazy: true,
   },
   optimization: {
@@ -85,13 +96,13 @@ module.exports = {
       'testDefine': JSON.stringify(true)
     }),
 
-    new WebpackManifestPlugin({
-      sort: t => t,
-      seed: {
-        l: 123
-      },
-      writeToFileEmit: true,
-    })
+    // new WebpackManifestPlugin({
+    //   sort: t => t,
+    //   seed: {
+    //     l: 123
+    //   },
+    //   writeToFileEmit: true,
+    // })
 
   ],
   // plugins: [

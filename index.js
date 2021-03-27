@@ -10,17 +10,19 @@ const WebpackDevServer  = require('webpack-dev-server')
 
 shell.rm('-rf', config.output.path);
 
+const callback = (error, stats) => {
+    if (error) {
+        return console.error(error);
+    }
+    console.log('complete compiler....');
+    
+    // console.log(stats);
+    console.log(`耗时：${(stats.endTime - stats.startTime)/ 1000}`)
+}
+
+
 const compiler = webpack(config)
 
-// (error, stats) => {
-//     if (error) {
-//         return console.error(error);
-//     }
-//     console.log('complete compiler....');
-    
-//     // console.log(stats);
-//     console.log(`耗时：${(stats.endTime - stats.startTime)/ 1000}`)
-// }
 
 const server = new WebpackDevServer(compiler, config.devServer)
 

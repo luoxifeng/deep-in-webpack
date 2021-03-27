@@ -6,7 +6,7 @@ class AAA {
 
 module.exports = class BBB extends AAA {}
 
-console.log('sfs');
+console.warn('%cssssddsfs', 'color:red');
 
 
 // export default function ddd() {}

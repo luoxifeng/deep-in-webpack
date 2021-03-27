@@ -7,8 +7,8 @@
 // __webpack_public_path__ = window.__public_path__ || './lll/'
 document.body.addEventListener('click', () => {
   import(//
-    /* webpackChunkName: "ssss/common1" */
-   /* webpackPrefetch: true */
+  //   /* webpackChunkName: "ssss/common1" */
+  //  /* webpackPrefetch: true */
   './moo'
   ).then(() => {
     console.log('./moo loadsssdsdsdd');
@@ -29,8 +29,8 @@ document.body.addEventListener('click', () => {
 // console.log(kkk, '====0111111===')
 
 
-const { kkss } = __webpack_require__('kkss');
-console.log(kkss, '====0111111===')
+// const { kkss } = __webpack_require__('kkss');
+// console.log(kkss, '====0111111===')
 
 // import "core-js/stable";
 // import "regenerator-runtime/runtime";
