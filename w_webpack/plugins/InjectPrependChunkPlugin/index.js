@@ -5,7 +5,8 @@ const {
   RawSource,
   OriginalSource
 } = require('webpack-sources')
-const { Compilation, util, javascript } = require('../../../webpack');
+const { Compilation, util, javascript, Module, Dependency } = require('../../../webpack');
+const AsyncDependenciesBlock = require("../../../webpack/lib/AsyncDependenciesBlock");
 const { getCompilationHooks } = javascript.JavascriptModulesPlugin;
 const chalk = require('chalk');
 
@@ -17,9 +18,90 @@ module.exports = class InjectPrependChunkPlugin {
 
   apply(compiler) {
 
+    class MyDependency extends Dependency {
+      constructor() {
+        super();
+        // this.originalModule = originalModule;
+      }
+    
+      get category() {
+        return "esm";
+      }
+    
+      get type() {
+        return "lazy import()";
+      }
+    
+      /**
+       * @returns {string | null} an identifier to merge equal requests
+       */
+      getResourceIdentifier() {
+        return 'uheudnfjsnfj.js';
+      }
+    }
+
 
     compiler.hooks.thisCompilation.tap("XXX",(compilation, { normalModuleFactory }) => {
       normalModuleFactory.hooks.module.tap("XXX", (originalModule, createData, resolveData) => {
+        // return originalModule
+        class HHh  extends Module {
+          constructor(context, request, originalModule) {
+            super("lazy-compilation-proxy", context, originalModule.layer);
+            this.context = context;
+            this.request = request;
+            this.buildInfo = {
+              active: false
+            };
+            // this.originalModule = 
+          }
+
+          readableIdentifier() {
+            return 'pppp ffff';
+          }
+
+          identifier() {
+            return 'pppp'
+          }
+
+          // getSourceTypes() {
+          //   return new Set(["javascript"]);;
+          // }
+
+          // needBuild(context, callback) {
+          //   callback(null, true);
+          // }
+
+          build(options, compilation, resolver, fs, callback) {
+            console.log('999999')
+            console.log(AsyncDependenciesBlock)
+
+            const block = new AsyncDependenciesBlock({});
+            block.addDependency(new MyDependency())
+
+            this.addBlock(block);
+            callback();
+          }
+
+          codeGeneration() {
+            console.log('codeGeneration')
+
+            const sources = new Map();
+            
+            sources.set("javascript", new RawSource('const foo = 90'));
+
+            return {
+              sources: new RawSource('lllll'),
+			        runtimeRequirements: new Set()
+            }
+
+          }
+
+          size(type) {
+            return 200;
+          }
+
+        }
+        return new HHh(compiler.context, resolveData.request, originalModule);
         console.log(chalk.cyanBright('originalModule'), originalModule, createData, resolveData)
       })
     })

@@ -6,7 +6,8 @@
 ```js
 compiler.hooks.thisCompilation.tap("XXX",(compilation, { normalModuleFactory }) => {
   normalModuleFactory.hooks.module.tap("XXX", (originalModule, createData, resolveData) => {
-
+    // XXXModule extends Module
+    return new XXXModule();
   })
 })
 
