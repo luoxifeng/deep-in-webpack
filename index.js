@@ -1,4 +1,4 @@
-const webpack = require('./webpack');
+const webpack = require('webpack');
 // const { resolve } = require('path');
 const shell = require('shelljs');
 const util = require('util');
@@ -22,7 +22,7 @@ const callback = (error, stats) => {
 
 
 let compiler = null;
-const devServer = 0;
+const devServer = 1;
 
 if (devServer) {
   compiler = webpack(config)

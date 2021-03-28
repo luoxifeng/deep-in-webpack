@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const requireDocPlugin = plugin => require(`./sdocs/PLugins/${plugin}`)
-const requireMyPlugin = plugin => require(`./w_webpack/plugins/${plugin}`)
+const requireMyPlugin = plugin => require(`./webpack/plugins/${plugin}`)
 
 const { WebpackManifestPlugin } = requireDocPlugin('webpack-manifest-plugin');
 const InjectPrependChunkPlugin = requireMyPlugin('InjectPrependChunkPlugin');
@@ -36,12 +36,12 @@ module.exports = {
     // chunkLoadingGlobal: 'myCustomFunc'
     // library: '__MY_LIB__'
   },
-  // experiments: {
-  //   lazyCompilation: {
-  //     imports: true,
-  //     entries: true,
-  //   },
-  // },
+  experiments: {
+    lazyCompilation: {
+      imports: true,
+      // entries: true,
+    },
+  },
   devServer: {
     headers: {
       'Access-Control-Allow-Origin': '*',
@@ -67,7 +67,7 @@ module.exports = {
       {
         test: /\.js$/,
         use: [
-          './w_webpack/loaders/test-loader',
+          './webpack/loaders/test-loader',
           // './webpack/loaders/dd-loader',
         ]
       },
@@ -82,7 +82,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new InjectPrependChunkPlugin(),
+    // new InjectPrependChunkPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './index.html',
