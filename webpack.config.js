@@ -39,7 +39,7 @@ module.exports = {
   experiments: {
     lazyCompilation: {
       imports: true,
-      // entries: true,
+      entries: false,
     },
   },
   devServer: {
@@ -53,7 +53,12 @@ module.exports = {
     port,
     filename: '[name].js',
     before(app, server, compiler) {
-      console.log(server)
+      // console.log(server)
+      app.get("*", (req, res, next) => {
+
+        console.log(req.path)
+        next()
+      })
 
 
     }
