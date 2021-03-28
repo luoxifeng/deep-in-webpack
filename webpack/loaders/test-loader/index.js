@@ -1,7 +1,7 @@
 const chalk = require('chalk');
 
-module.exports = (content) => {
-    console.log(chalk.cyanBright('loader'))
+module.exports = function(content) {
+    console.log(chalk.yellowBright(`loader - ${this.resourcePath}`))
 
     return content;
 }
