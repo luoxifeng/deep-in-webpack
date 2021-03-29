@@ -5,7 +5,7 @@
 
 
 
-## 💣 Import Point
+## [💣 Import Point](./sdocs/ImportPoint/README.md)
 ```
 重要的概念，如module，chunk, assets, bundle。。。
 ```
@@ -16,10 +16,12 @@
 - [chunk](./sdocs/ImportPoint/README.md#chunk)
 
 
-## ⚔️ Skills
+## [⚔️ Skills](./sdocs/Skills/README.md)
 ```
-常用技巧
+常用技巧, 比如插件的关键钩子可以获取到什么，具体可以做什么等等。。。
 ```
+- module
+
 
 
 
