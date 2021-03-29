@@ -2,9 +2,7 @@
 ```
 重要的概念，如module，chunk, assets, bundle。。。
 ```
-## 关键对象
-
-### webpack对象
+## webpack
 ```js
 webpack: [Function: f] {
   webpack: [Getter],
@@ -92,6 +90,7 @@ webpack: [Function: f] {
 }
 ```
 
+## module
 - module对象
 ```js
 NormalModule {
@@ -144,7 +143,11 @@ NormalModule {
 }
 ```
 
-- chunk对象
+- dependency对象
+```
+```
+
+## chunk对象
 ```js
  Chunk {
   id: 'main',

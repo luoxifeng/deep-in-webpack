@@ -9,9 +9,9 @@
 ```
 重要的概念，如module，chunk, assets, bundle。。。
 ```
-- [webpack函数](./sdocs/ImportPoint/README.md#webpack)
+- [webpack](./sdocs/ImportPoint/README.md#webpack)
 
-- [module对象](./sdocs/ImportPoint/README.md#module对象)
+- [module](./sdocs/ImportPoint/README.md#module)
 
 ## ⚔️ Skills
 ```
