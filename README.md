@@ -9,7 +9,7 @@
 ```
 重要的概念，如module，chunk, assets, bundle。。。
 ```
-- webpack 对外暴露的api
+- webpack对象
 ```js
 webpack: [Function: f] {
   webpack: [Getter],
@@ -96,6 +96,91 @@ webpack: [Function: f] {
   experiments: [Object]
 }
 ```
+
+- chunk对象
+```js
+ Chunk {
+  id: 'main',
+  ids: [ 'main' ],
+  debugId: 1000,
+  name: 'main',
+  preventIntegration: false,
+  entryModule:
+    NormalModule {
+      dependencies: [],
+      blocks: [],
+      variables: [],
+      type: 'javascript/auto',
+      context: '/Users/xxx/workspace/xxx/src',
+      debugId: 1000,
+      hash: 'a6388d29fa15bd58c6cffb10246992a5',
+      renderedHash: 'a6388d29fa15bd58c6cf',
+      resolveOptions: {},
+      factoryMeta: {},
+      warnings: [],
+      errors: [],
+      buildMeta: [Object],
+      buildInfo: [Object],
+      reasons: [Array],
+      _chunks: [SortableSet],
+      id: './src/index.js',
+      index: 0,
+      index2: 0,
+      depth: 0,
+      issuer: null,
+      profile: undefined,
+      prefetched: false,
+      built: true,
+      used: null,
+      usedExports: null,
+      optimizationBailout: [],
+      _rewriteChunkInReasons: undefined,
+      useSourceMap: true,
+      _source: [SourceMapSource],
+      request:
+      '/Users/orion/Desktop/react-beauty-highcharts/node_modules/babel-loader/lib/index.js!/Users/xxx/workspace/xxx/src/index.js',
+      userRequest: '/Users/xxx/workspace/xxx/src/index.js',
+      rawRequest: './src/index.js',
+      binary: false,
+      parser: [Parser],
+      generator: JavascriptGenerator {},
+      resource: '/Users/xxx/workspace/xxx/src/index.js',
+      matchResource: undefined,
+      loaders: [Array],
+      error: null,
+      _buildHash: '488efbd43aa05371d3f44d94c89abd57',
+      buildTimestamp: 1547884969828,
+      _cachedSources: Map {},
+      lineToLine: false,
+      _lastSuccessfulBuildMeta: [Object],
+      _ast: null 
+    },
+  _modules:
+    SortableSet [Set] {
+      [NormalModule],
+      _sortFn: [Function: sortByIdentifier],
+      _lastActiveSortFn: null,
+      _cache: undefined,
+      _cacheOrderIndependent: undefined },
+  filenameTemplate: undefined,
+  _groups:
+    SortableSet [Set] {
+      [Entrypoint],
+      _sortFn: [Function: sortChunkGroupById],
+      _lastActiveSortFn: null,
+      _cache: undefined,
+      _cacheOrderIndependent: undefined },
+  files: [],
+  rendered: false,
+  hash: '0988e8454f1915ec05fee482db8d0a6f',
+  contentHash: { javascript: '4b8695ca3c1d42e76c52' },
+  renderedHash: '0988e8454f1915ec05fe',
+  chunkReason: undefined,
+  extraAsync: false,
+  removedModules: undefined 
+}
+```
+
 ## ⚔️ Skills
 ```
 常用技巧

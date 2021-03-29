@@ -3,6 +3,7 @@
 // const $ = arg[2]('_je');
 
 // $('#dd')
+// import dfdff from 'dfsdf';
 
 // __webpack_public_path__ = window.__public_path__ || './lll/'
 document.body.addEventListener('click', () => {
