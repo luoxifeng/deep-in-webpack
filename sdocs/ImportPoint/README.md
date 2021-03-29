@@ -147,9 +147,9 @@ NormalModule {
 ```
 ```
 
-## chunk对象
+## chunk
 ```js
- Chunk {
+Chunk {
   id: 'main',
   ids: [ 'main' ],
   debugId: 1000,
@@ -165,13 +165,14 @@ NormalModule {
       _cacheOrderIndependent: undefined 
     },
   filenameTemplate: undefined,
-  _groups:
+  _groups: 
     SortableSet [Set] {
       [Entrypoint],
       _sortFn: [Function: sortChunkGroupById],
       _lastActiveSortFn: null,
       _cache: undefined,
-      _cacheOrderIndependent: undefined },
+      _cacheOrderIndependent: undefined 
+    },
   files: [],
   rendered: false,
   hash: '0988e8454f1915ec05fee482db8d0a6f',
