@@ -1,7 +1,7 @@
 # Skills
 
 
-## Module 
+## module 
 - 用一个新的模块替换原来的模块
 ```js
 compiler.hooks.thisCompilation.tap("XXX",(compilation, { normalModuleFactory }) => {
@@ -13,7 +13,7 @@ compiler.hooks.thisCompilation.tap("XXX",(compilation, { normalModuleFactory }) 
 
 ```
 
-## Chunk
+## chunk
 - 更新chunkhash
 ```js
 // 常用在你要对chunk添加内容
@@ -24,7 +24,7 @@ compiler.hooks.thisCompilation.tap('XXX', compilation => {
 })
 ```
 
-## Asset
+## asset
 - 添加代码到asset上
 ```js
 // 添加的代码因为没有添加到chunk中，会引起hash前后没变化，要去手动的更新hash,参照 `更新chunkhash`

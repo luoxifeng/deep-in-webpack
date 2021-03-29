@@ -94,8 +94,8 @@ webpack: [Function: f] {
 - module对象
 ```js
 NormalModule {
-  dependencies: [],
-  blocks: [],
+  dependencies: [], // 很重要的概念 当前模块的依赖
+  blocks: [], // 很重要的概念 当前模块的依赖
   variables: [],
   type: 'javascript/auto',
   context: '/Users/xxx/workspace/xxx/src',
