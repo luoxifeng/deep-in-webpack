@@ -18,10 +18,9 @@
 ```
 常用技巧, 比如插件的关键钩子可以获取到什么，具体可以做什么等等。。。
 ```
-- [Module](./sdocs/Skills/README.md#Module)
-- [Chunk](./sdocs/Skills/README.md#Chunk)
-- [Asset](./sdocs/Skills/README.md#Asset)
-
+- [module](./sdocs/Skills/README.md#module)
+- [chunk](./sdocs/Skills/README.md#chunk)
+- [asset](./sdocs/Skills/README.md#asset)
 
 ## ⛓ Runtime
 ```
