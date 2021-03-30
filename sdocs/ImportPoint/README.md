@@ -2,6 +2,12 @@
 ```
 重要的概念，如module，chunk, assets, bundle。。。
 ```
+
+## [__webpack_require__](./__webpack_require__.md)
+```
+```
+
+
 ## webpack
 ```js
 webpack: [Function: f] {

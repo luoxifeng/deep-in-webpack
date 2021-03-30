@@ -28,6 +28,6 @@
     "deepin": "bin/index.js"
   },
   "devDependencies": {
-    "html-webpack-plugin": "^5.2.0"
+    "html-webpack-plugin": "5.2.0"
   }
 }

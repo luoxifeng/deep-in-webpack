@@ -26,7 +26,7 @@ module.exports = {
   // target: 'web',
   output: {
     path: resolve(__dirname, './sdist'),
-    filename: '[name].[chunkhash:8].js',
+    filename: '[name].js',
     publicPath: './',
     chunkLoadTimeout: 1000 * 1000,
     // chunkFilename: '[id].[chunkhash:8].js',
