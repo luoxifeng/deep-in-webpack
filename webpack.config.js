@@ -52,16 +52,16 @@ module.exports = {
     // inject: true,
     port,
     filename: '[name].js',
-    before(app, server, compiler) {
-      // console.log(server)
-      app.get("*", (req, res, next) => {
+    // before(app, server, compiler) {
+    //   // console.log(server)
+    //   app.get("*", (req, res, next) => {
 
-        console.log(req.path)
-        next()
-      })
+    //     console.log(req.path)
+    //     next()
+    //   })
 
 
-    }
+    // }
     // lazy: true,
   },
   optimization: {
