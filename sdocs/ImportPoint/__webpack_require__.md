@@ -33,18 +33,25 @@ __webpack_require__.h = () => ("7ba73b6e2564bfb1a168")
 
 ```js
 /* webpack/runtime/get update manifest filename */
-/* 携带上次构建的hash值，拼接更新文件清单的json请求url */	
+/* 携带上次构建的hash值，拼接获取更新文件清单的请求url，json后缀 */	
 __webpack_require__.hmrF = () => ("runtime." + __webpack_require__.h() + ".hot-update.json");
 ```
 
 - __webpack_require__.hmrM (Function)
 ```js
+/**
+ * 在热更新 check 阶段客户端发送请求，去请求资源变更清单
+ * 接下来根据请求到的manifest，创建script请求更新的内容
+ */
 __webpack_require__.hmrM = () => {
   if (typeof fetch === "undefined") throw new Error("No browser support: need fetch API");
-  return fetch(__webpack_require__.p + __webpack_require__.hmrF()).then((response) => {
-    if(response.status === 404) return; // no update available
-    if(!response.ok) throw new Error("Failed to fetch update manifest " + response.statusText);
-    return response.json();
-  });
+  return fetch(
+      __webpack_require__.p + __webpack_require__.hmrF() // json url
+    )
+    .then((response) => {
+      if(response.status === 404) return; // no update available
+      if(!response.ok) throw new Error("Failed to fetch update manifest " + response.statusText);
+      return response.json();
+    });
 };
 ```
