@@ -4,7 +4,7 @@ const shell = require('shelljs');
 const util = require('util');
 const config = require('./webpack.config');
 
-const WebpackDevServer = require('webpack-dev-server')
+const WebpackDevServer = require('webpack-dev-server');
 
 // const Webpack = util.promisify(webpack)
 
@@ -37,4 +37,7 @@ if (devServer) {
 }
 
 
-// console.log(global.watch);
+
+
+
+

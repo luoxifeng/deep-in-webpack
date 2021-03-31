@@ -1,4 +1,8 @@
 
+// import { from, EMPTY, of, interval } from 'rxjs';
+// import { catchError, retry, map, switchMap, mergeMap } from 'rxjs/operators';
+
+
 
 // const $ = arg[2]('_je');
 
@@ -11,10 +15,11 @@ document.body.addEventListener('click', () => {
   //   /* webpackChunkName: "ssss/common1" */
   //  /* webpackPrefetch: true */
   './moo'
-  ).then(() => {
-    console.log('./moo loadsssdsdsdd');
+  ).then(data => {
+    console.error(`./moo ${data.default}`);
   })
 })
+
 
 
 // import(//

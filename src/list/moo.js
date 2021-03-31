@@ -1,13 +1,11 @@
-const { format } = require('core-js/fn/date');
 
+// class AAA {
 
-class AAA {
+// }
 
-}
+module.exports = 'LazyCompilation data: sfsfsdd滴滴ddddfsf'
 
-module.exports = class BBB extends AAA { }
-
-console.warn('%c你好vcddvdcsrsssssdd概f', 'color:red');
+console.warn('%cLoaded LazyCompilation: file', 'color:red;background:#000;');
 
 
 // export default function ddd() {}
@@ -79,49 +77,3 @@ console.warn('%c你好vcddvdcsrsssssdd概f', 'color:red');
 //   }
 // }
 
-
-async function asyncFn() {
-  const { list, total } = await fetch("http//xxxxxxx");
-  return { list, total };
-}
-
-let { list, total } = await asyncFn();
-let result = list.find((item) => item.xx === "yes");
-if (!result) {
-  list = await asyncFn(total);
-  result = list.find((item) => item.xx === "yes");
-}
-if (!result) return;
-return result;
-
-
-from(fetch("http//xxxxxxx"))
-  .pipe(
-    map(({ list, total }) => {
-      return { result: list.find((item) => item.xx === "yes"), total };
-    }),
-    filter(t => t.result),
-    mergeMap(t => {
-        return from(asyncFn(t.total));
-    }),
-    map(list => list.find((item) => item.xx === "yes"))
-  )
-  .subscrible(
-    () => {
-
-    }
-  )
-
-  function getRecord() {
-    let pageSize = undefined;
-    from(getLogList(pageSize))
-      .pipe(
-        map(({ list, total }) => {
-          pageSize = total;
-          const res = list.find(t => t)
-          if (!res) throw new Error()
-          return res;
-        }),
-        retry(1),
-      )
-  }

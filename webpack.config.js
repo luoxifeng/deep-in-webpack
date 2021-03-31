@@ -43,10 +43,12 @@ module.exports = {
     },
   },
   devServer: {
+    writeToDisk: true,
     headers: {
       'Access-Control-Allow-Origin': '*',
     },
     open: false,
+    // hotOnly: true,
     hot: true,
     // index: 'index.html',
     // inject: true,
@@ -62,7 +64,6 @@ module.exports = {
 
 
     // }
-    // lazy: true,
   },
   optimization: {
     runtimeChunk: 'single',
