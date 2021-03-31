@@ -55,3 +55,31 @@ __webpack_require__.hmrM = () => {
     });
 };
 ```
+
+- __webpack_require__.hmrC (Object: { jsonp: Function, [key]: Function })
+```js
+// array with handler functions to download chunk updates
+/**
+ * 挂载请求更新文件的函数，
+ * 热更新 prepare 阶段的时候会遍历此对象的上面的key值
+ * 调用函数创建script标签请求脚本，当所有请求回来，
+ * 脚本开始执行后才会进入then, 在此对象上我们也可以注册我们自己的函数
+ * 热更新默认挂载的是 __webpack_require__.hmrC.jsonp 函数
+ */
+Promise.all(
+  Object.keys(__webpack_require__.hmrC)
+    .reduce(function (promises, key) {
+      __webpack_require__.hmrC[key](
+        update.c,
+        update.r,
+        update.m,
+        promises,
+        currentUpdateApplyHandlers,
+        updatedModules
+      );
+      return promises;
+    },
+    []
+  )
+)
+```
