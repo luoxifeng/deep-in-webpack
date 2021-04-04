@@ -3,11 +3,15 @@
 
 // }
 
-module.exports = 'LazyCompilation data: sfsfsdd滴滴ddddfsf'
+module.exports = 'LazyCompilation data: 068<br>'
 
 console.warn('%cLoaded LazyCompilation: file', 'color:red;background:#000;');
 
+if (module.hot) {
 
+  module.hot.accept()
+
+}
 // export default function ddd() {}
 
 
