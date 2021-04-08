@@ -37,10 +37,10 @@ module.exports = {
     // library: '__MY_LIB__'
   },
   experiments: {
-    // lazyCompilation: {
-    //   imports: true,
-    //   entries: false,
-    // },
+    lazyCompilation: {
+      imports: true,
+      entries: false,
+    },
   },
   devServer: {
     writeToDisk: true,
@@ -66,7 +66,7 @@ module.exports = {
     // }
   },
   optimization: {
-    runtimeChunk: 'single',
+    // runtimeChunk: 'single',
   },
   module: {
     rules: [

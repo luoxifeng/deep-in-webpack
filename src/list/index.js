@@ -2,32 +2,33 @@
 // import { from, EMPTY, of, interval } from 'rxjs';
 // import { catchError, retry, map, switchMap, mergeMap } from 'rxjs/operators';
 
-import content from './moo'
+// import content from './moo'
 
 const append = str => document.body.append(str);
 // const $ = arg[2]('_je');
 
-append(content);
-if (module.hot) {
+// append(content);
+// if (module.hot) {
 
-  module.hot.accept('./moo.js', () => {
-    debugger;
-    append(content);
-  })
+//   module.hot.accept('./moo.js', () => {
+//     debugger;
+//     append(content);
+//   })
 
-}
+// }
 // $('#dd')
 // import dfdff from 'dfsdf';
 
 // __webpack_public_path__ = window.__public_path__ || './lll/'
 document.body.addEventListener('click', () => {
-  // import(//
-  // //   /* webpackChunkName: "ssss/common1" */
-  // //  /* webpackPrefetch: true */
-  // './moo'
-  // ).then(data => {
-  //   console.error(`./moo ${data.default}`);
-  // })
+  import(//
+  //   /* webpackChunkName: "ssss/common1" */
+  //  /* webpackPrefetch: true */
+  './moo'
+  ).then(data => {
+    append(data.default);
+    console.error(`./moo ${data.default}`);
+  })
 })
 
 
