@@ -2,36 +2,27 @@
 // class AAA {
 
 // }
-import text from './noo.js';
+// import text from './noo.js';
 
-export default 'LazyCompilation data: <br>'
+export default 'LazyCompilation data: '
 
-const create = str => {
-  const div = document.createElement('div');
-  div.innerText = str
-  return div;
-}
-const append = el => document.body.append(el);
+// const create = str => {
+//   const div = document.createElement('div');
+//   div.innerText = str
+//   return div;
+// }
+// const append = el => document.body.append(el);
 
+// let div = create(text);
+// append(div)
+// // setTimeout(() => append(div))
 
-console.warn('%cLoaded LazyCompilation: file', 'color:red;background:#000;');
-let div = create(text);
-append(div)
-// setTimeout(() => append(div))
-
-if (module.hot) {
-
-  module.hot.accept('./noo.js', () => {
-    debugger
-    document.body.removeChild(div)
-    // document.body.remove(div)
-    // .remove();
-    // debugger;
-    append(create(text))
-    // append(content);
-  })
-
-}
+// if (module.hot) {
+//   module.hot.accept('./noo.js', () => {
+//     document.body.removeChild(div)
+//     append(create(text))
+//   })
+// }
 
 // export default function ddd() {}
 

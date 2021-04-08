@@ -15,7 +15,7 @@ module.exports = {
   context: resolve(__dirname, './'),
   mode: 'development',
   devtool: 'source-map',
-  // watch: true,
+  watch: true,
   entry: {
     // home: ['./src/home/deps.js', './src/home/index.js'],
     list: './src/list/index.js'
@@ -66,7 +66,7 @@ module.exports = {
     // }
   },
   optimization: {
-    // runtimeChunk: 'single',
+    runtimeChunk: 'single',
   },
   module: {
     rules: [
@@ -88,7 +88,7 @@ module.exports = {
     ]
   },
   plugins: [
-    // new InjectPrependChunkPlugin(),
+    new InjectPrependChunkPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './index.html',

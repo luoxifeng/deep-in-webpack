@@ -5,12 +5,77 @@ const {
   RawSource,
   OriginalSource
 } = require('webpack-sources')
-const { Compilation, util, javascript, Module, Dependency } = require('webpack');
+const { Compilation, util, javascript, Module, Dependency, RuntimeGlobals } = require('webpack');
 const AsyncDependenciesBlock = require("webpack/lib/AsyncDependenciesBlock");
+const CommonJsRequireDependency = require("webpack/lib/dependencies/CommonJsRequireDependency");
+const { registerNotSerializable } = require("webpack/lib//util/serialization");
+
 const { getCompilationHooks } = javascript.JavascriptModulesPlugin;
 const chalk = require('chalk');
 
 
+class HHh  extends Module {
+  constructor(context, request, originalModule) {
+    super("lazy-compilation-proxy", context, originalModule.layer);
+    this.context = context;
+    this.request = request;
+    this.originalModule = originalModule
+  }
+
+  readableIdentifier() {
+    return 'ppppffff';
+  }
+
+  identifier() {
+    return 'pppp'
+  }
+
+  getSourceTypes() {
+    return new Set(["javascript"]);
+  }
+
+  libIdent(options) {
+    return `11111!lazy-compilation-proxy`;
+  }
+
+  needBuild(context, callback) {
+    callback(null, true);
+  }
+
+  build(options, compilation, resolver, fs, callback) {
+    this.buildInfo = {}
+    // const block = new AsyncDependenciesBlock({});
+    // block.addDependency(new MyDependency())
+    const dep = new CommonJsRequireDependency(this.originalModule.resource + '?llll')
+    this.addDependency(dep);
+    // this.addBlock(block);
+    callback();
+  }
+
+  codeGeneration() {
+    console.log('codeGeneration')
+		const runtimeRequirements = new Set();
+
+    runtimeRequirements.add(RuntimeGlobals.module);
+
+    const sources = new Map();
+    const code = ''
+    
+    sources.set("javascript", new RawSource('const foo = 90'));
+
+    return {
+      sources,
+      runtimeRequirements,
+    }
+  }
+
+  size(type) {
+    return 200;
+  }
+
+}
+
+// registerNotSerializable(HHh)
 module.exports = class InjectPrependChunkPlugin {
   constructor(options) {
     this.options = options
@@ -18,91 +83,38 @@ module.exports = class InjectPrependChunkPlugin {
 
   apply(compiler) {
 
-    class MyDependency extends Dependency {
-      constructor() {
-        super();
-        // this.originalModule = originalModule;
-      }
+    // class MyDependency extends Dependency {
+    //   constructor() {
+    //     super();
+    //     // this.originalModule = originalModule;
+    //   }
     
-      get category() {
-        return "esm";
-      }
+    //   get category() {
+    //     return "esm";
+    //   }
     
-      get type() {
-        return "lazy import()";
-      }
+    //   get type() {
+    //     return "lazy import()";
+    //   }
     
-      /**
-       * @returns {string | null} an identifier to merge equal requests
-       */
-      getResourceIdentifier() {
-        return 'uheudnfjsnfj.js';
-      }
-    }
+    //   /**
+    //    * @returns {string | null} an identifier to merge equal requests
+    //    */
+    //   getResourceIdentifier() {
+    //     return 'uheudnfjsnfj.js';
+    //   }
+    // }
+
+    
 
 
     compiler.hooks.thisCompilation.tap("XXX",(compilation, { normalModuleFactory }) => {
       normalModuleFactory.hooks.module.tap("XXX", (originalModule, createData, resolveData) => {
-        // return originalModule
-        class HHh  extends Module {
-          constructor(context, request, originalModule) {
-            super("lazy-compilation-proxy", context, originalModule.layer);
-            this.context = context;
-            this.request = request;
-            this.buildInfo = {
-              active: false
-            };
-            // this.originalModule = 
-          }
-
-          readableIdentifier() {
-            return 'pppp ffff';
-          }
-
-          identifier() {
-            return 'pppp'
-          }
-
-          // getSourceTypes() {
-          //   return new Set(["javascript"]);;
-          // }
-
-          // needBuild(context, callback) {
-          //   callback(null, true);
-          // }
-
-          build(options, compilation, resolver, fs, callback) {
-            console.log('999999')
-            console.log(AsyncDependenciesBlock)
-
-            const block = new AsyncDependenciesBlock({});
-            block.addDependency(new MyDependency())
-
-            this.addBlock(block);
-            callback();
-          }
-
-          codeGeneration() {
-            console.log('codeGeneration')
-
-            const sources = new Map();
-            
-            sources.set("javascript", new RawSource('const foo = 90'));
-
-            return {
-              sources: new RawSource('lllll'),
-			        runtimeRequirements: new Set()
-            }
-
-          }
-
-          size(type) {
-            return 200;
-          }
-
+        if (originalModule.request.endsWith('moo.js')) {
+          return new HHh(compiler.context, resolveData.request, originalModule);
         }
-        return new HHh(compiler.context, resolveData.request, originalModule);
-        console.log(chalk.cyanBright('originalModule'), originalModule, createData, resolveData)
+       
+       
       })
     })
     // this.options.

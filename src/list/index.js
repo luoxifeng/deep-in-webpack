@@ -2,7 +2,8 @@
 // import { from, EMPTY, of, interval } from 'rxjs';
 // import { catchError, retry, map, switchMap, mergeMap } from 'rxjs/operators';
 
-// import content from './moo'
+import content from './moo'
+  console.log(content);
 
 const append = str => document.body.append(str);
 // const $ = arg[2]('_je');
@@ -21,14 +22,15 @@ const append = str => document.body.append(str);
 
 // __webpack_public_path__ = window.__public_path__ || './lll/'
 document.body.addEventListener('click', () => {
-  import(//
-  //   /* webpackChunkName: "ssss/common1" */
-  //  /* webpackPrefetch: true */
-  './moo'
-  ).then(data => {
-    append(data.default);
-    console.error(`./moo ${data.default}`);
-  })
+  // console.log(content);
+  // import(//
+  // //   /* webpackChunkName: "ssss/common1" */
+  // //  /* webpackPrefetch: true */
+  // './moo'
+  // ).then(data => {
+  //   append(data.default);
+  //   console.error(`./moo ${data.default}`);
+  // })
 })
 
 
