@@ -4,7 +4,7 @@
 // }
 // import text from './noo.js';
 
-export default 'LazyCompilation data: '
+export default 'LazyCompilation data:fff '
 
 // const create = str => {
 //   const div = document.createElement('div');

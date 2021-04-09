@@ -5,7 +5,7 @@ const {
   RawSource,
   OriginalSource
 } = require('webpack-sources')
-const { Compilation, util, javascript, Module, Dependency, RuntimeGlobals } = require('webpack');
+const { Compilation, util, javascript, Module, Dependency, RuntimeGlobals, Template } = require('webpack');
 const AsyncDependenciesBlock = require("webpack/lib/AsyncDependenciesBlock");
 const CommonJsRequireDependency = require("webpack/lib/dependencies/CommonJsRequireDependency");
 const { registerNotSerializable } = require("webpack/lib//util/serialization");
@@ -22,20 +22,26 @@ class HHh  extends Module {
     this.originalModule = originalModule
   }
 
-  readableIdentifier() {
-    return 'ppppffff';
-  }
-
   identifier() {
-    return 'pppp'
-  }
+		return `proxy|${this.originalModule.identifier()}`;
+	}
 
+	/**
+	 * @param {RequestShortener} requestShortener the request shortener
+	 * @returns {string} a user readable identifier of the module
+	 */
+	readableIdentifier(requestShortener) {
+		return `proxy ${this.originalModule.readableIdentifier(
+			requestShortener
+		)}`;
+  }
+  
   getSourceTypes() {
     return new Set(["javascript"]);
   }
 
   libIdent(options) {
-    return `11111!lazy-compilation-proxy`;
+    return `${this.originalModule.libIdent(options)}!proxy`;
   }
 
   needBuild(context, callback) {
@@ -46,22 +52,40 @@ class HHh  extends Module {
     this.buildInfo = {}
     // const block = new AsyncDependenciesBlock({});
     // block.addDependency(new MyDependency())
-    const dep = new CommonJsRequireDependency(this.originalModule.resource + '?llll')
+    const dep = new CommonJsRequireDependency(`${this.originalModule.resource}?true`)
     this.addDependency(dep);
     // this.addBlock(block);
     callback();
   }
 
-  codeGeneration() {
-    console.log('codeGeneration')
-		const runtimeRequirements = new Set();
+  codeGeneration({ runtimeTemplate, chunkGraph, moduleGraph }) {
+    console.log('MyProxyModule codeGeneration')
+    const sources = new Map();
+    const runtimeRequirements = new Set();
+    let code = '';
+
+    const dep = this.dependencies[0];
+		const trueModule = moduleGraph.getModule(dep);
 
     runtimeRequirements.add(RuntimeGlobals.module);
+    code += Template.asString([
+      `var temp = ${runtimeTemplate.moduleExports({
+				module: trueModule,
+				chunkGraph,
+				request: trueModule.userRequest,
+				runtimeRequirements
+      })}
+      console.log('Test Proxy Module') // 自己添加代码
+      module.exports = temp
+      `
+    ])
+    // runtimeRequirements.add(RuntimeGlobals.exports);
+    runtimeRequirements.add(RuntimeGlobals.exports);
 
-    const sources = new Map();
-    const code = ''
+
+
     
-    sources.set("javascript", new RawSource('const foo = 90'));
+    sources.set("javascript", new RawSource(code));
 
     return {
       sources,

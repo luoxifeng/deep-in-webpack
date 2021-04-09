@@ -3,12 +3,8 @@
 // import { catchError, retry, map, switchMap, mergeMap } from 'rxjs/operators';
 
 import content from './moo'
-  console.log(content);
-
 const append = str => document.body.append(str);
-// const $ = arg[2]('_je');
-
-// append(content);
+append(content);
 // if (module.hot) {
 
 //   module.hot.accept('./moo.js', () => {
