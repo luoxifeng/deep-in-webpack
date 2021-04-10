@@ -35,9 +35,3 @@ if (devServer) {
 } else {
   webpack(config, callback)
 }
-
-
-
-
-
-

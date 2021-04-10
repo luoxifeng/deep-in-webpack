@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const requireDocPlugin = plugin => require(`./sdocs/PLugins/${plugin}`)
 const requireMyPlugin = target => require(`./webpack.my/plugins/${target}`)
-const requireMyLoader = target => require(`./webpack.my/loasders/${target}`)
+const requireMyLoader = target => resolve(`./webpack.my/loaders/${target}`)
 
 const { WebpackManifestPlugin } = requireDocPlugin('webpack-manifest-plugin');
 const InjectPrependChunkPlugin = requireMyPlugin('InjectPrependChunkPlugin');
@@ -75,7 +75,7 @@ module.exports = {
         test: /\.js$/,
         use: [
           requireMyLoader('test-loader')
-          ,
+          // ,
           // './webpack/loaders/dd-loader',
         ]
       },
