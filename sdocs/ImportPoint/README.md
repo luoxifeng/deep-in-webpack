@@ -1,13 +1,96 @@
 # Import Point
+
 ```
 重要的概念，如module，chunk, assets, bundle。。。
 ```
 
-## [__webpack_require__](./__webpack_require__.md)
-```
+## [**webpack_require**](./__webpack_require__.md)
+
 ```
 
+```
+
+## Dependency
+
+- Dependency
+```ts
+declare class Dependency {
+	constructor();
+	weak: boolean;
+	optional: boolean;
+	loc: DependencyLocation;
+	readonly type: string;
+	readonly category: string;
+	getResourceIdentifier(): null | string;
+
+	/**
+	 * Returns the referenced module and export
+	 */
+	getReference(moduleGraph: ModuleGraph): never;
+
+	/**
+	 * Returns list of exports referenced by this dependency
+	 */
+	getReferencedExports(
+		moduleGraph: ModuleGraph,
+		runtime: RuntimeSpec
+	): (string[] | ReferencedExport)[];
+	getCondition(
+		moduleGraph: ModuleGraph
+	):
+		| null
+		| false
+		| ((arg0: ModuleGraphConnection, arg1: RuntimeSpec) => ConnectionState);
+
+	/**
+	 * Returns the exported names
+	 */
+	getExports(moduleGraph: ModuleGraph): undefined | ExportsSpec;
+
+	/**
+	 * Returns warnings
+	 */
+	getWarnings(moduleGraph: ModuleGraph): WebpackError[];
+
+	/**
+	 * Returns errors
+	 */
+	getErrors(moduleGraph: ModuleGraph): WebpackError[];
+
+	/**
+	 * Update the hash
+	 */
+	updateHash(hash: Hash, context: UpdateHashContextDependency): void;
+
+	/**
+	 * implement this method to allow the occurrence order plugin to count correctly
+	 */
+	getNumberOfIdOccurrences(): number;
+	getModuleEvaluationSideEffectsState(
+		moduleGraph: ModuleGraph
+	): ConnectionState;
+	createIgnoredModule(context: string): Module;
+	serialize(__0: { write: any }): void;
+	deserialize(__0: { read: any }): void;
+	module: any;
+	readonly disconnect: any;
+	static NO_EXPORTS_REFERENCED: string[][];
+	static EXPORTS_OBJECT_REFERENCED: string[][];
+}
+```
+
+
+- EntryDependency
+```js
+EntryDependency -> ModuleDependency -> 
+EntryDependency: {
+
+}
+```
+
+
 ## Compilation
+
 ```js
 compilation: Compilation {
   entries: Map {
@@ -32,6 +115,7 @@ compilation: Compilation {
 ```
 
 ## webpack
+
 ```js
 webpack: [Function: f] {
   webpack: [Getter],
@@ -120,7 +204,9 @@ webpack: [Function: f] {
 ```
 
 ## module
-- module对象
+
+- module 对象
+
 ```js
 NormalModule {
   dependencies: [], // 很重要的概念 当前模块的依赖
@@ -168,15 +254,18 @@ NormalModule {
   _cachedSources: Map {},
   lineToLine: false,
   _lastSuccessfulBuildMeta: [Object],
-  _ast: null 
+  _ast: null
 }
 ```
 
-- dependency对象
+- dependency 对象
+
 ```
+
 ```
 
 ## chunk
+
 ```js
 Chunk {
   id: 'main',
@@ -191,16 +280,16 @@ Chunk {
       _sortFn: [Function: sortByIdentifier],
       _lastActiveSortFn: null,
       _cache: undefined,
-      _cacheOrderIndependent: undefined 
+      _cacheOrderIndependent: undefined
     },
   filenameTemplate: undefined,
-  _groups: 
+  _groups:
     SortableSet [Set] {
       [Entrypoint],
       _sortFn: [Function: sortChunkGroupById],
       _lastActiveSortFn: null,
       _cache: undefined,
-      _cacheOrderIndependent: undefined 
+      _cacheOrderIndependent: undefined
     },
   files: [],
   rendered: false,
@@ -209,6 +298,6 @@ Chunk {
   renderedHash: '0988e8454f1915ec05fe',
   chunkReason: undefined,
   extraAsync: false,
-  removedModules: undefined 
+  removedModules: undefined
 }
 ```
