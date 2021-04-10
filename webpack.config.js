@@ -3,7 +3,8 @@ const chalk = require('chalk');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const requireDocPlugin = plugin => require(`./sdocs/PLugins/${plugin}`)
-const requireMyPlugin = plugin => require(`./webpack/plugins/${plugin}`)
+const requireMyPlugin = target => require(`./webpack.my/plugins/${target}`)
+const requireMyLoader = target => require(`./webpack.my/loasders/${target}`)
 
 const { WebpackManifestPlugin } = requireDocPlugin('webpack-manifest-plugin');
 const InjectPrependChunkPlugin = requireMyPlugin('InjectPrependChunkPlugin');
@@ -73,7 +74,8 @@ module.exports = {
       {
         test: /\.js$/,
         use: [
-          './webpack/loaders/test-loader',
+          requireMyLoader('test-loader')
+          ,
           // './webpack/loaders/dd-loader',
         ]
       },
