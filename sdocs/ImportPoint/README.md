@@ -13,16 +13,16 @@ compilation: Compilation {
   entries: Map {
     [key: string]: Object: entryData  {
     	dependencies: EntryDependency[],
-			includeDependencies: [],
-      options: {
-        chunkLoading: undefined
-        dependOn: undefined
-        filename: undefined
-        layer: undefined
-        library: undefined
-        name: "home", // entry key
-        runtime: undefined
-        wasmLoading: undefined
+	includeDependencies: [],
+      	options: {
+	chunkLoading: undefined
+	dependOn: undefined
+	filename: undefined
+	layer: undefined
+	library: undefined
+	name: "home", // entry key
+	runtime: undefined
+	wasmLoading: undefined
       }
     }
   }
