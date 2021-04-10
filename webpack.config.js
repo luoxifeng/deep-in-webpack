@@ -18,8 +18,8 @@ module.exports = {
   devtool: 'source-map',
   watch: true,
   entry: {
-    // home: ['./src/home/deps.js', './src/home/index.js'],
-    list: './src/list/index.js'
+    home: ['./src/home/deps.js', './src/home/index.js'],
+    // list: './src/list/index.js'
   },
   stats: {
     // colors: true,
