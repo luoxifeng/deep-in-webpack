@@ -103,3 +103,5 @@ sdist
 
 # TernJS port file
 .tern-port
+
+.vscode/
