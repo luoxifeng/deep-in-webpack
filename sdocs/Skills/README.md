@@ -1,5 +1,28 @@
 # Skills
 
+## entry
+- 更改entry名
+```js
+compiler.hooks.entryOption.tap("XXX", (context, entry) => {
+  for (const i in entry) {
+    if (/webpack-hot-middleware\/client/.test(entry[i])) {
+      entry[i] += '&reload=true'
+    }
+  }
+  return true;
+});
+```
+- 增加entry的依赖
+```js
+compiler.hooks.entryOption.tap("XXX", (context, entry) => {
+  for (const i in entry) {
+    if (/home/.test(entry[i])) { // 指定入口，去掉判断就是全部入口
+      entry[i].import.unshift('./common/deps.js')
+    }
+  }
+  return true;
+});
+
 
 ## module 
 - 用一个新的模块替换原来的模块
@@ -10,7 +33,6 @@ compiler.hooks.thisCompilation.tap("XXX",(compilation, { normalModuleFactory }) 
     return new XXXModule();
   })
 })
-
 ```
 
 ## chunk
