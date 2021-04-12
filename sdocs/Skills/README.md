@@ -34,6 +34,11 @@ compiler.hooks.thisCompilation.tap("XXX",(compilation, { normalModuleFactory }) 
   })
 })
 ```
+- 剥离模块
+```js
+ExternalModuleFactoryPlugin
+ExternalModule
+```
 
 ## chunk
 - 更新chunkhash

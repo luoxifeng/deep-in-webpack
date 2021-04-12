@@ -5,6 +5,7 @@
 EntryOptionPlugin
 EntryPlugin
 DynamicEntryPlugin
+EntryDependency
 ```
 
 

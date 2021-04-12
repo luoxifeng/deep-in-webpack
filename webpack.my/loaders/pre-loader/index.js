@@ -1,4 +1,4 @@
 module.exports = (content) => {
-    console.log('pre-loader......');
-    return content + 'var g = "pre-loader你好";';
+    console.log('pre-loader......', this.resourePath);
+    return content;
 }

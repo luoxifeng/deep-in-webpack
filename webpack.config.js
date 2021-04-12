@@ -79,6 +79,24 @@ module.exports = {
           // './webpack/loaders/dd-loader',
         ]
       },
+      {
+        test: /\.js$/,
+        enforce: "pre",
+        use: [
+          requireMyLoader('pre-loader')
+          // ,
+          // './webpack/loaders/dd-loader',
+        ]
+      },
+      {
+        test: /\.js$/,
+        enforce: "post",
+        use: [
+          requireMyLoader('post-loader')
+          // ,
+          // './webpack/loaders/dd-loader',
+        ]
+      },
       // {
       //   test: /\.js$/,
       //   use: [
@@ -91,14 +109,14 @@ module.exports = {
   },
   plugins: [
     new InjectPrependChunkPlugin(),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: './index.html',
-      inject: true,
-      // externalScripts: {
-      //   inject: `<script>var g = 123</script>`,
-      // }
-    }),
+    // new HtmlWebpackPlugin({
+    //   filename: 'index.html',
+    //   template: './index.html',
+    //   inject: true,
+    //   // externalScripts: {
+    //   //   inject: `<script>var g = 123</script>`,
+    //   // }
+    // }),
 
     new webpack.DefinePlugin({
       'testDefine': JSON.stringify(true)
