@@ -106,5 +106,25 @@ nmf.hooks.beforeResolve.callAsync(resolveData, (err, result) => { //
   > 如果三方插件调用会回调返回的 `result === false`, 则会直接调用 `createCallbak` 跳过接下里的流程，作用是忽略当前的模块。否则调用 `nmf.hooks.factorize.callAsync` 进行正常流程
     - nmf.hooks.factorize.callAsync -> 
       - nmf.hooks.resolve.callAsync ->
-        - loaders
+        - 解析文件路径
+        - nmf.ruleSet.exec
+        ```
+        指定匹配规则，获取文件满足的左右规则集, 可能会包含非loader
+        ```
+        - 过滤分类rule
+        ```
+        遍历上一步得到的rules根据rule.type进行分类，过滤掉非loader, 得到
+        useLoadersPost, useLoaders, useLoadersPre 三个数组，每一项的结构如下：
+        {
+          ident: undefined, 
+          loader: "./ddd/test-loader", // 可能为绝对路径以及相对路径
+          options: undefined, // 如果配置了就有值
+        }
+        ```
+        - resolve loader路径
+        > 对上述三组loaders 分别调用 `nmf.resolveRequestArray` 
+        使用 `loadResolver` 根据 `context` 把loader的路径处理成绝对路径
+        得到对应的 `postLoaders, normalLoaders, preLoaders`
+        -
+
 - nmf.create 结束  
