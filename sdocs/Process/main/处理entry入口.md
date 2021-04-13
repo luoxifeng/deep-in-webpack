@@ -8,10 +8,36 @@ DynamicEntryPlugin
 EntryDependency
 ```
 
+## 过程对象
+- resolveData
+```js
+const resolveData = {
+  cacheable: true,
+  context: "/Users/xxx/deep-in-webpack", // 上下文
+  contextDependencies: LazySet {_set: Set(0), _toMerge: Set(0), _toDeepMerge: Array(0), …},
+  contextInfo: { issuer: "", issuerLayer: null, compiler: undefined },
+  createData: {}, // 刚开始是空
+  dependencies: [EntryDependency], // 依赖
+  fileDependencies: LazySet {_set: Set(0), _toMerge: Set(0), _toDeepMerge: Array(0), …},
+  missingDependencies: LazySet {_set: Set(0), _toMerge: Set(0), _toDeepMerge: Array(0), …},
+  request: "./src/home/js", // 文件的引用
+  resolveOptions: {}, // 刚开始是空
+}
+```
+
+- createData
+```js
+const createData = {
+  
+}
+```
 
 ## 过程
 - compilation
 ```js
+
+
+
 
 ```
 
@@ -20,6 +46,7 @@ EntryDependency
 const nmf = NormalModuleFactory
 
 nmf.hooks.beforeResolve.callAsync(resolveData, (err, result) => {
+  // resolveData.createData is empty object
   /**
    *
    */
