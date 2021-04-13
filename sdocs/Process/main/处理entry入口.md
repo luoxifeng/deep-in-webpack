@@ -42,17 +42,22 @@ const createData = {
 ```
 
 - NormalModuleFactory 阶段
+
 ```js
 const nmf = NormalModuleFactory
 
-nmf.hooks.beforeResolve.callAsync(resolveData, (err, result) => {
+// nmf.create 阶段
+nmf.hooks.beforeResolve.callAsync(resolveData, (err, result) => { // 
   // resolveData.createData is empty object
   /**
    *
    */
-  nmf.hooks.factorize.callAsync(resolveData, (err, module) => {
+  nmf.hooks.factorize.callAsync(resolveData, (err, module) => { // 
 
     nmf.hooks.resolve.callAsync(resolveData, (err, result) => {
+      /**
+       * 
+       */
 
       nmf.hooks.afterResolve.callAsync(resolveData, (err, result) => {
         
