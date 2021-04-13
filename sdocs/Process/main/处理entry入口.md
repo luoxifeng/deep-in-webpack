@@ -137,10 +137,12 @@ nmf.hooks.beforeResolve.callAsync(resolveData, (err, result) => { //
           ```
           直接自己创建module，后续流程就会使用这个module,一般用在使用自己创建的module代替原始module
           ```
-          - nmf.hooks.module
+        - <- nmf.hooks.createModule
+          - -> nmf.hooks.module
           ```
           可以使用自己创建的module替换原始module,一般用在使用自己创建的module代理真实module,做一些控制或者优化
           当需要真实module的时候在返回真实module LazyCompilation 就是使用这个hook
           ```
-        - <- nmf.hooks.createModule
-- nmf.create 结束  
+    - <- nmf.hooks.factorize callback(err, module)
+- nmf.create callbalk (err, factoryResult)
+

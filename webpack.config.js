@@ -18,7 +18,10 @@ module.exports = {
   devtool: 'source-map',
   watch: true,
   entry: {
-    home: ['./webpack.my/loaders/pre-loader/index.js!=!-!./src/home/deps.js', './src/home/index.js'],
+    home: [
+      // './webpack.my/loaders/pre-loader/index.js!=!-!./src/home/deps.js', 
+      './src/home/index.js'
+    ],
     // list: './src/list/index.js'
   },
   stats: {
