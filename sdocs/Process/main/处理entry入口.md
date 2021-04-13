@@ -99,16 +99,11 @@ nmf.hooks.beforeResolve.callAsync(resolveData, (err, result) => { //
 - nmf.create(data, createCallbak) ->
   ```
   组装 resolveData 调用 nmf.hooks.beforeResolve
-  传入 resolveData, createCallbak
   ```
   - nmf.hooks.beforeResolve.callAsync(resolveData, beforeResolveCallback: (err, result)) ->
-  > 源码里面什么也没做，直接调用回调
-  但是三方插件可以调用回调返回 false 来[忽略某个模块](../../Skills/README.md#module)
-
-
-  >
+  > 源码里面什么也没做，直接调用回调，但是三方插件可以调用回调返回 `false` 来[忽略某个模块](../../Skills/README.md#module)
   - -> nmf.hooks.beforeResolve callback(err, result) 阶段
-
+  > 如果三方插件调用会回调返回的 `result === false`, 则会直接调用 `createCallbak` 跳过接下里的流程，作用是忽略当前的模块。否则调用 `nmf.hooks.factorize.callAsync` 进行正常流程
     - nmf.hooks.factorize.callAsync -> 
       - nmf.hooks.resolve.callAsync ->
         - loaders
