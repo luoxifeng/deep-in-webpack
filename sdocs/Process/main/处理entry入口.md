@@ -101,12 +101,13 @@ nmf.hooks.beforeResolve.callAsync(resolveData, (err, result) => { //
   组装 resolveData 调用 nmf.hooks.beforeResolve
   传入 resolveData, createCallbak
   ```
-  - nmf.hooks.beforeResolve.callAsync(resolveData, beforeResolveCallback(err, result)) ->
-  ```
-  源码里面什么也没做，直接调用回调
-  但是三方插件可以调用回调返回 false 来忽略摸个模块
-  ```
-  - nmf.hooks.beforeResolve callback 阶段 <-
+  - nmf.hooks.beforeResolve.callAsync(resolveData, beforeResolveCallback: (err, result)) ->
+  > 源码里面什么也没做，直接调用回调
+  但是三方插件可以调用回调返回 false 来[忽略某个模块](../../Skills/README.md#module)
+
+
+  >
+  - -> nmf.hooks.beforeResolve callback(err, result) 阶段
 
     - nmf.hooks.factorize.callAsync -> 
       - nmf.hooks.resolve.callAsync ->

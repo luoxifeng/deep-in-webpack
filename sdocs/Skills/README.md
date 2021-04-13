@@ -22,9 +22,22 @@ compiler.hooks.entryOption.tap("XXX", (context, entry) => {
   }
   return true;
 });
+```
 
+## module
+- 忽略某个模块
+```js
+compiler.hooks.thisCompilation.tap("XXX",(compilation, { normalModuleFactory }) => {
+  const nmfHooks = normalModuleFactory.hooks
+  nmfHooks.beforeResolve.tapAsync('XXX', (resolveData, callback) => {
+    if (/xxx\.js/.test(resolveData.request)) {
+      callback(null, false)
+    }
+  })
+})
+nmf.hooks
+```
 
-## module 
 - 用一个新的模块替换原来的模块
 ```js
 compiler.hooks.thisCompilation.tap("XXX",(compilation, { normalModuleFactory }) => {
