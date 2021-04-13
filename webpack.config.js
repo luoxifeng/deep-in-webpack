@@ -18,7 +18,7 @@ module.exports = {
   devtool: 'source-map',
   watch: true,
   entry: {
-    home: ['-!./src/home/deps.js', './src/home/index.js'],
+    home: ['./webpack.my/loaders/pre-loader/index.js!=!-!./src/home/deps.js', './src/home/index.js'],
     // list: './src/list/index.js'
   },
   stats: {
@@ -92,7 +92,13 @@ module.exports = {
         test: /\.js$/,
         enforce: "post",
         use: [
-          requireMyLoader('post-loader')
+          {
+            loader: requireMyLoader('post-loader'),
+            options: {
+              ddd: 123
+            },
+          }
+          
           // ,
           // './webpack/loaders/dd-loader',
         ]

@@ -100,11 +100,11 @@ nmf.hooks.beforeResolve.callAsync(resolveData, (err, result) => { //
   ```
   组装 resolveData 调用 nmf.hooks.beforeResolve
   ```
-  - nmf.hooks.beforeResolve.callAsync(resolveData, beforeResolveCallback: (err, result)) ->
+  - -> nmf.hooks.beforeResolve.callAsync(resolveData, beforeResolveCallback: (err, result)) ->
   > 源码里面什么也没做，直接调用回调，但是三方插件可以调用回调返回 `false` 来[忽略某个模块](../../Skills/README.md#module)
-  - -> nmf.hooks.beforeResolve callback(err, result) 阶段
+  - -> nmf.hooks.beforeResolve callback(err, result) 阶段 ->
   > 如果三方插件调用会回调返回的 `result === false`, 则会直接调用 `createCallbak` 跳过接下里的流程，作用是忽略当前的模块。否则调用 `nmf.hooks.factorize.callAsync` 进行正常流程
-    - nmf.hooks.factorize.callAsync -> 
+    - -> nmf.hooks.factorize.callAsync -> 
       - nmf.hooks.resolve.callAsync ->
         - 解析文件路径
         >解析文件路径同时根据文件路径解析，是否使用了inline-loader以及，忽略其他的loader得到
@@ -129,5 +129,18 @@ nmf.hooks.beforeResolve.callAsync(resolveData, (err, result) => { //
         使用 `loadResolver` 根据 `context` 把loader的路径处理成绝对路径
         得到对应的 `postLoaders, normalLoaders, preLoaders`
         -
-
+      - nmf.hooks.afterResolve
+        ```
+        返回false 忽略模块
+        ```
+        - -> nmf.hooks.createModule
+          ```
+          直接自己创建module，后续流程就会使用这个module,一般用在使用自己创建的module代替原始module
+          ```
+          - nmf.hooks.module
+          ```
+          可以使用自己创建的module替换原始module,一般用在使用自己创建的module代理真实module,做一些控制或者优化
+          当需要真实module的时候在返回真实module LazyCompilation 就是使用这个hook
+          ```
+        - <- nmf.hooks.createModule
 - nmf.create 结束  
