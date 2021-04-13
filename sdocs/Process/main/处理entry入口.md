@@ -107,20 +107,23 @@ nmf.hooks.beforeResolve.callAsync(resolveData, (err, result) => { //
     - nmf.hooks.factorize.callAsync -> 
       - nmf.hooks.resolve.callAsync ->
         - 解析文件路径
+        >解析文件路径同时根据文件路径解析，是否使用了inline-loader以及，忽略其他的loader得到
+          >>`以-!开头 noPreAutoLoaders(不使用pre normal loader)`<br>
+          >>`以!开头 noAutoLoaders(不使用normal loader)`<br>
+          >>`以!!开头 noPrePostAutoLoaders(不使用pre normal post loader)`<br>
         - nmf.ruleSet.exec
         ```
         指定匹配规则，获取文件满足的左右规则集, 可能会包含非loader
         ```
         - 过滤分类rule
-        ```
-        遍历上一步得到的rules根据rule.type进行分类，过滤掉非loader, 得到
-        useLoadersPost, useLoaders, useLoadersPre 三个数组，每一项的结构如下：
+        >遍历上一步得到的rules根据rule.type进行分类以及`noPreAutoLoaders, noAutoLoaders, noPrePostAutoLoaders`，
+        过滤掉非loader类型以及文件路径里面忽略的loader, 然后得到useLoadersPost, useLoaders, useLoadersPre 三个数组，
+        每一项的结构如下：
         {
           ident: undefined, 
           loader: "./ddd/test-loader", // 可能为绝对路径以及相对路径
           options: undefined, // 如果配置了就有值
         }
-        ```
         - resolve loader路径
         > 对上述三组loaders 分别调用 `nmf.resolveRequestArray` 
         使用 `loadResolver` 根据 `context` 把loader的路径处理成绝对路径
