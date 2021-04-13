@@ -46,15 +46,20 @@ const createData = {
 ```js
 const nmf = NormalModuleFactory
 
-// nmf.create 阶段
+/**
+ * nmf.create 阶段
+ * 组装 resolveData, 调用 nmf beforeResolve hook
+ */
 nmf.hooks.beforeResolve.callAsync(resolveData, (err, result) => { // 
-  // resolveData.createData is empty object
-  /**
-   *
-   */
   nmf.hooks.factorize.callAsync(resolveData, (err, module) => { // 
 
-    nmf.hooks.resolve.callAsync(resolveData, (err, result) => {
+    /**
+     *
+     * 
+     */
+    nmf.hooks.resolve.callAsync(
+      resolveData, /* */
+      
       /**
        * 
        */
@@ -78,10 +83,32 @@ nmf.hooks.beforeResolve.callAsync(resolveData, (err, result) => { //
       })
 
     })
+      
 
   })
+ 
   
 })
 
-nmf.hooks.beforeResolve -> nmf.hooks.factorize.callAsync -> nmf.hooks.resolve.callAsync afterResolve
+
+
 ```
+
+## 具体流程
+
+- nmf.create(data, createCallbak) ->
+  ```
+  组装 resolveData 调用 nmf.hooks.beforeResolve
+  传入 resolveData, createCallbak
+  ```
+  - nmf.hooks.beforeResolve.callAsync(resolveData, beforeResolveCallback(err, result)) ->
+  ```
+  源码里面什么也没做，直接调用回调
+  但是三方插件可以调用回调返回 false 来忽略摸个模块
+  ```
+  - nmf.hooks.beforeResolve callback 阶段 <-
+
+    - nmf.hooks.factorize.callAsync -> 
+      - nmf.hooks.resolve.callAsync ->
+        - loaders
+- nmf.create 结束  
