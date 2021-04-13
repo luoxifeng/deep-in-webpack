@@ -35,7 +35,6 @@ compiler.hooks.thisCompilation.tap("XXX",(compilation, { normalModuleFactory }) 
     }
   })
 })
-nmf.hooks
 ```
 
 - 用一个新的模块替换原来的模块
