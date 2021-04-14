@@ -146,3 +146,8 @@ nmf.hooks.beforeResolve.callAsync(resolveData, (err, result) => { //
     - <- nmf.hooks.factorize callback(err, module)
 - nmf.create callbalk (err, factoryResult)
 
+- build
+```
+_factorizeModule -> nmf.create module -> _addModule ->  handleModuleCreation ->
+factorizeModule -> addModule -> buildModule -> processModuleDependencies
+```
