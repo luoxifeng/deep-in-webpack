@@ -129,11 +129,11 @@ module.exports = class InjectPrependChunkPlugin {
     
 
 
-    compiler.hooks.thisCompilation.tap("XXX",(compilation, { normalModuleFactory }) => {
-      normalModuleFactory.hooks.module.tap("XXX", (originalModule, createData, resolveData) => {
-        if (originalModule.request.endsWith('moo.js')) {
-          return new HHh(compiler.context, resolveData.request, originalModule);
-        }
+    compiler.hooks.compilation.tap("XXX",(compilation, { normalModuleFactory }) => {
+      const nmfHooks = normalModuleFactory.hooks
+      nmfHooks.beforeResolve.tapAsync("XXX", (resolveData, callback) => {
+        console.log(resolveData)
+        callback()
       })
     })
   }

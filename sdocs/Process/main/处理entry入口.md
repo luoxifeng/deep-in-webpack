@@ -32,69 +32,27 @@ const createData = {
 }
 ```
 
-## 过程
-- compilation
-```js
+## compilation 添加入口阶段
+- -> compiler.hooks.make 调用阶段 ->
+  - -> compilation.addEntry 调用阶段 ->
+    > this.entries.set(name, entryData)
+    - <--> compilation.hooks.addEntry.call(entry, options)
+    > 三方差价可以在这里添加入口
+    - -> compilation.addModuleTree 调用阶段
+      > 得到 factory, dependencies 
+      - -> compilation.handleModuleCreation 调用阶段
+        - -> compilation.factorizeModule（_factorizeModule） 调用阶段
+          - -> normalModuleFactory.create 调用阶段
+          > [具体过程参照下面](#NormalModuleFactory.create阶段)
+          - <- normalModuleFactory.create 回调阶段
+          > 
+        - <- compilation.factorizeModule（_factorizeModule） 回调阶段
+      - <- compilation.handleModuleCreation 回调阶段
+    - <- compilation.addModuleTree 回调阶段
+  - <- compilation.addEntry 回调阶段
+- <- compiler.hooks.make 回调阶段
 
-
-
-
-```
-
-- NormalModuleFactory 阶段
-
-```js
-const nmf = NormalModuleFactory
-
-/**
- * nmf.create 阶段
- * 组装 resolveData, 调用 nmf beforeResolve hook
- */
-nmf.hooks.beforeResolve.callAsync(resolveData, (err, result) => { // 
-  nmf.hooks.factorize.callAsync(resolveData, (err, module) => { // 
-
-    /**
-     *
-     * 
-     */
-    nmf.hooks.resolve.callAsync(
-      resolveData, /* */
-      
-      /**
-       * 
-       */
-
-      nmf.hooks.afterResolve.callAsync(resolveData, (err, result) => {
-        
-        const createData = resolveData.createData;
-        nmf.hooks.createModule.callAsync(createData, resolveData,(err, createdModule) => {
-          /**
-           * nmf.hooks.module 
-           * 这个hook我们可以使用自己的模块来替换原始模块
-           */
-          createdModule = nmf.hooks.module.call(
-            createdModule,
-            createData,
-            resolveData
-          );
-
-          return callback(null, createdModule);
-        })
-      })
-
-    })
-      
-
-  })
- 
-  
-})
-
-
-
-```
-
-## 具体流程
+## NormalModuleFactory.create 阶段
 
 - nmf.create(data, createCallbak) ->
   ```
@@ -128,7 +86,7 @@ nmf.hooks.beforeResolve.callAsync(resolveData, (err, result) => { //
         > 对上述三组loaders 分别调用 `nmf.resolveRequestArray` 
         使用 `loadResolver` 根据 `context` 把loader的路径处理成绝对路径
         得到对应的 `postLoaders, normalLoaders, preLoaders`
-        -
+        - 
       - nmf.hooks.afterResolve
         ```
         返回false 忽略模块
@@ -146,8 +104,9 @@ nmf.hooks.beforeResolve.callAsync(resolveData, (err, result) => { //
     - <- nmf.hooks.factorize callback(err, module)
 - nmf.create callbalk (err, factoryResult)
 
-- build
+
 ```
+
 _factorizeModule -> nmf.create module -> _addModule ->  handleModuleCreation ->
 factorizeModule -> addModule -> buildModule -> processModuleDependencies
 ```
