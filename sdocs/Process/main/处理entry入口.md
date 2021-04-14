@@ -37,7 +37,7 @@ const createData = {
   - -> compilation.addEntry 调用阶段 ->
     > this.entries.set(name, entryData)
     - <--> compilation.hooks.addEntry.call(entry, options)
-    > 三方差价可以在这里添加入口
+    > 三方插件可以在这里添加入口
     - -> compilation.addModuleTree 调用阶段
       > 得到 factory, dependencies 
       - -> compilation.handleModuleCreation 调用阶段
