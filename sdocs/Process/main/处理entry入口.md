@@ -73,10 +73,30 @@ const createData = {
                     - 成功 compilation.hooks.succeedModule.call(module)
                     - 回到 compilation.buildModule 回调
             - <- compilation.buildModule 回调阶段
-              - -> this.processModuleDependencies
-
+              - -> compilation.processModuleDependencies 调用阶段
+                - processDependenciesBlock format依赖
+                  > 根据build阶段得到的依赖，进行重组 得到 sortedDependencies 每一项结构如下
+                  {
+                    factory: factory,
+                    dependencies: [XXXDependency, YYYDependency],
+                    originModule: module
+                  }
+                  在webpack中依赖分为很多种比如 import { xxx } from './xxx.js' 这会得到两个依赖，
+                  HarmonyImportSideEffectDependency， HarmonyImportSpecifierDependency
+                  如果sortedDependencies为空说明当前模块没有依赖其他模块 调用回调直接返回 compilation.handleModuleCreation 回调阶段
+                - 处理 sortedDependencies
+                  > 当模块的依赖不为空，使用asyncLib.forEach对 sortedDependencies每一项进行 compilation.handleModuleCreation处理，
+                  此时又回到了 create module -> build module -> processDependencies -> asyncLib.forEach -> create module -> ...递归
+                  由于asyncLib.forEach对列表的处理只有每一项都被处理了才会进入asyncLib.forEach的回调，并且每一个模块的依赖链在被处理的时候，
+                  上层的compilation.handleModuleCreation的回到是没有被调用的，所以在深层次处理依赖的时候，只有最深层析的依赖被处理了，
+                  才会执行当前compilation.handleModuleCreation的回调，然后在调用上层compilation.handleModuleCreation的回调，
+                  按照这样的顺序一层层向上调用，最终回到入口的compilation.handleModuleCreation。
+                  也就是说整个过程上层的进程受到处理依赖的进程控制，一直到最底层的依赖被处理，然后在一步步向上册回退知道最上层，
+                  回到最上层以后然后在调用回调，这时从一个入口开始到最底层的依赖都被处理，所有依赖都生成了module,接着进行接下里的流程
       - <- compilation.handleModuleCreation 回调阶段
     - <- compilation.addModuleTree 回调阶段
+      — 失败 this.hooks.failedEntry.call(entry, options, err)
+      - 成功 this.hooks.succeedEntry.call(entry, options, module)
   - <- compilation.addEntry 回调阶段
 - <- compiler.hooks.make 回调阶段
 
