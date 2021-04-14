@@ -39,10 +39,93 @@ compiler.hooks.thisCompilation.tap("XXX",(compilation, { normalModuleFactory }) 
 
 - 用一个新的模块替换原来的模块
 ```js
+
+class ProxyModule  extends Module {
+  constructor(context, request, originalModule) {
+    super("my-proxy-module", context, originalModule.layer);
+    this.context = context;
+    this.request = request;
+    this.originalModule = originalModule
+  }
+
+  identifier() {
+		return `proxy|${this.originalModule.identifier()}`;
+	}
+
+	/**
+	 * @param {RequestShortener} requestShortener the request shortener
+	 * @returns {string} a user readable identifier of the module
+	 */
+	readableIdentifier(requestShortener) {
+		return `proxy ${this.originalModule.readableIdentifier(
+			requestShortener
+		)}`;
+  }
+  
+  getSourceTypes() {
+    return new Set(["javascript"]);
+  }
+
+  libIdent(options) {
+    return `${this.originalModule.libIdent(options)}!proxy`;
+  }
+
+  needBuild(context, callback) {
+    callback(null, true);
+  }
+
+  build(options, compilation, resolver, fs, callback) {
+    this.buildInfo = {}
+    // const block = new AsyncDependenciesBlock({});
+    // block.addDependency(new MyDependency())
+    const dep = new CommonJsRequireDependency(`${this.originalModule.resource}?true`)
+    this.addDependency(dep);
+    // this.addBlock(block);
+    callback();
+  }
+
+  codeGeneration({ runtimeTemplate, chunkGraph, moduleGraph }) {
+    console.log('MyProxyModule codeGeneration')
+    const sources = new Map();
+    const runtimeRequirements = new Set();
+    let code = '';
+
+    const dep = this.dependencies[0];
+		const trueModule = moduleGraph.getModule(dep);
+
+    runtimeRequirements.add(RuntimeGlobals.module);
+    code += Template.asString([
+      `var temp = ${runtimeTemplate.moduleExports({
+				module: trueModule,
+				chunkGraph,
+				request: trueModule.userRequest,
+				runtimeRequirements
+      })}
+      console.log('Test Proxy Module') // 自己添加代码
+      module.exports = temp
+      `
+    ])
+    // runtimeRequirements.add(RuntimeGlobals.exports);
+    runtimeRequirements.add(RuntimeGlobals.exports);
+
+    sources.set("javascript", new RawSource(code));
+
+    return {
+      sources,
+      runtimeRequirements,
+    }
+  }
+
+  size(type) {
+    return 200;
+  }
+
+}
+
 compiler.hooks.thisCompilation.tap("XXX",(compilation, { normalModuleFactory }) => {
   normalModuleFactory.hooks.module.tap("XXX", (originalModule, createData, resolveData) => {
     // XXXModule extends Module
-    return new XXXModule();
+    return new ProxyModule();
   })
 })
 ```
