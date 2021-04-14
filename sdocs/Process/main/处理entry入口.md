@@ -43,10 +43,38 @@ const createData = {
       - -> compilation.handleModuleCreation 调用阶段
         - -> compilation.factorizeModule（_factorizeModule） 调用阶段
           - -> normalModuleFactory.create 调用阶段
-          > [具体过程参照下面](#NormalModuleFactory.create阶段)
+            > [具体过程参照下面](#NormalModuleFactory.create阶段)
           - <- normalModuleFactory.create 回调阶段
-          > 
+            > 创建了module实例
         - <- compilation.factorizeModule（_factorizeModule） 回调阶段
+          - -> compilation.addModule 调用阶段
+            - -> compilation._modulesCache.get(identifier, (err, cacheModule)) 调用阶段
+              > 根据 module.identifier() 获取缓存
+            - <- compilation._modulesCache.get cacheModule 回调阶段 (取缓存)
+              > 如果 cacheModule 存在就使用 cacheModule 否则使用 之前的module
+              同时向compilation添加module实例
+              compilation._modules.set(identifier, module);
+			        compilation.modules.add(module);
+          - <- compilation.addModule 回调阶段
+            - -> compilation.buildModule 调用阶段
+              - -> module.needBuild 调用阶段
+              - <- module.needBuild 回调阶段
+                > 如果needBuild 为false 直接调用回调返回 compilation.addModule 回调
+                - compilation.hooks.buildModule.call(module)
+				        - compilation.builtModules.add(module)
+                - -> module.build 调用阶段 （关键部分，另做分析）
+                  > 内部调用run-loader 运行loader对代码进行处理，
+                  webpack根据返回的结果进行parse -> ast -> 分析依赖 -> 挂载到当前module上
+                - <- module.build 回调阶段
+                  - 失败 compilation.hooks.failedModule.call(module, err)
+                  - -> 成功 compilation._modulesCache.store 调用阶段 (存缓存)
+                  - <- compilation._modulesCache.store 回调阶段 (存好缓存)
+                    - 失败 compilation.hooks.failedModule.call(module, err)
+                    - 成功 compilation.hooks.succeedModule.call(module)
+                    - 回到 compilation.buildModule 回调
+            - <- compilation.buildModule 回调阶段
+              - -> this.processModuleDependencies
+
       - <- compilation.handleModuleCreation 回调阶段
     - <- compilation.addModuleTree 回调阶段
   - <- compilation.addEntry 回调阶段
