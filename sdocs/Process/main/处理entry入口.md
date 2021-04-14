@@ -42,7 +42,7 @@ const createData = {
       > 得到 factory, dependencies 
       - -> compilation.handleModuleCreation 调用阶段
         - -> compilation.factorizeModule（_factorizeModule） 调用阶段
-          - -> normalModuleFactory.create 调用阶段
+          - -> normalModuleFactory.create 调用阶段 （关键）
             > [具体过程参照下面](#NormalModuleFactory.create阶段)
           - <- normalModuleFactory.create 回调阶段
             > 创建了module实例
@@ -61,7 +61,7 @@ const createData = {
               - <- module.needBuild 回调阶段
                 > 如果needBuild 为false 直接调用回调返回 compilation.addModule 回调
                 - compilation.hooks.buildModule.call(module)
-				        - compilation.builtModules.add(module)
+                - compilation.builtModules.add(module)
                 - -> module.build 调用阶段 （关键部分，另做分析）
                   > 内部调用run-loader 运行loader对代码进行处理，
                   webpack根据返回的结果进行parse -> ast -> 分析依赖 -> 挂载到当前module上
@@ -95,18 +95,18 @@ const createData = {
                   回到最上层以后然后在调用回调，这时从一个入口开始到最底层的依赖都被处理，所有依赖都生成了module,接着进行接下里的流程
       - <- compilation.handleModuleCreation 回调阶段
     - <- compilation.addModuleTree 回调阶段
-      — 失败 this.hooks.failedEntry.call(entry, options, err)
+      - 失败 this.hooks.failedEntry.call(entry, options, err)
       - 成功 this.hooks.succeedEntry.call(entry, options, module)
   - <- compilation.addEntry 回调阶段
 - <- compiler.hooks.make 回调阶段
 
 ## NormalModuleFactory.create 阶段
 
-- nmf.create(data, createCallbak) ->
+- -> nmf.create(data, createCallbak)
   ```
   组装 resolveData 调用 nmf.hooks.beforeResolve
   ```
-  - -> nmf.hooks.beforeResolve.callAsync(resolveData, beforeResolveCallback: (err, result)) ->
+  - -> nmf.hooks.beforeResolve.callAsync(resolveData, beforeResolveCallback: (err, result))
   > 源码里面什么也没做，直接调用回调，但是三方插件可以调用回调返回 `false` 来[忽略某个模块](../../Skills/README.md#module)
   - -> nmf.hooks.beforeResolve callback(err, result) 阶段 ->
   > 如果三方插件调用会回调返回的 `result === false`, 则会直接调用 `createCallbak` 跳过接下里的流程，作用是忽略当前的模块。否则调用 `nmf.hooks.factorize.callAsync` 进行正常流程
@@ -151,10 +151,3 @@ const createData = {
           ```
     - <- nmf.hooks.factorize callback(err, module)
 - nmf.create callbalk (err, factoryResult)
-
-
-```
-
-_factorizeModule -> nmf.create module -> _addModule ->  handleModuleCreation ->
-factorizeModule -> addModule -> buildModule -> processModuleDependencies
-```
