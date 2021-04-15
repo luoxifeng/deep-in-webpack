@@ -25,15 +25,8 @@ const resolveData = {
 }
 ```
 
-- createData
-```js
-const createData = {
-  
-}
-```
-
 ## 重要阶段
-> create module -> addModule -> buildModule -> processDependencies -> 【create module】-> make callback
+> make -> addEntry -> addModuleTree -> create module -> addModule -> buildModule -> processDependencies -> 【create module】-> make callback
 
 ## compilation 添加入口阶段
 - -> compiler.hooks.make 调用阶段 ->
