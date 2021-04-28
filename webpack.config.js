@@ -8,10 +8,14 @@ const requireMyLoader = target => resolve(`./webpack.my/loaders/${target}`)
 
 const { WebpackManifestPlugin } = requireDocPlugin('webpack-manifest-plugin');
 const InjectPrependChunkPlugin = requireMyPlugin('InjectPrependChunkPlugin');
+const ResolveCurrentCtxAliasPlugin = requireMyPlugin('ResolveCurrentCtxAliasPlugin');
+
 
 const port = 5000
 
-
+/**
+ *
+ */
 module.exports = {
   context: resolve(__dirname, './'),
   mode: 'development',
@@ -20,12 +24,21 @@ module.exports = {
   entry: {
     home: [
       // './webpack.my/loaders/pre-loader/index.js!=!-!./src/home/deps.js', 
-      './src/home/index.js'
+      './packages/src/home/index.js'
     ],
     // list: './src/list/index.js'
   },
   stats: {
     // colors: true,
+  },
+  resolve: {
+    plugins: [
+      new ResolveCurrentCtxAliasPlugin({
+        alias: {
+          '@/current': `${resolve(__dirname, './packages/src/{{0}}')}`
+        },
+      })
+    ]
   },
   // target: 'web',
   output: {
