@@ -24,7 +24,7 @@ module.exports = {
   entry: {
     home: [
       // './webpack.my/loaders/pre-loader/index.js!=!-!./src/home/deps.js', 
-      './packages/src/home/index.js'
+      './packages/project1/src/pages/home/index.js'
     ],
     // list: './src/list/index.js'
   },
@@ -35,7 +35,7 @@ module.exports = {
     plugins: [
       new ResolveCurrentCtxAliasPlugin({
         alias: {
-          '@/current': `${resolve(__dirname, './packages/src/{{0}}')}`
+          '@/current': `${resolve(__dirname, './packages/{{0}}/src/pages/{{3}}')}`
         },
       })
     ]
