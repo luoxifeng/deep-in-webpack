@@ -1,5 +1,4 @@
 const { resolve } = require("path");
-const _resolve = require('enhanced-resolve');
 const forEachBail = require('enhanced-resolve/lib/forEachBail');
 
 module.exports = class CurrentCtxAliasPlugin {
