@@ -21,7 +21,7 @@ module.exports = class CurrentCtxAliasPlugin {
         forEachBail(
           this.alias, 
           (item, callback) => {
-            console.log(request, resolveContext, callback)
+            
             if (!requestStr.startsWith(item.alias)) return callback()
             const remainingRequest = requestStr.substr(item.alias.length)
             const staticPath = item.value.replace(/\{\{.*/, '').replace(/(\/$)/, '')
