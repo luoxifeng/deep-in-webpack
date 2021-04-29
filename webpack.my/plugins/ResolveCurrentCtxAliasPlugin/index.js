@@ -36,12 +36,13 @@ module.exports = class CurrentCtxAliasPlugin {
             }
 
             const message = [
-              `alias path '${request.request}' mapping info:`,
-              `\n  `,
-              `\n  context: '${currentContext}' \n  mapping: '${request.request}' -> '${requestStr}'`
-            ]
+              `\nalias path '${request.request}' mapping info:`,
+              `\n  issuer: '${request.context.issuer}'`,
+              `\n  context: '${currentContext}'`,
+              `\n  mapping: '${requestStr}'`,
+              `\n`,
+            ].join('')
              
-
             console.log(message)
             resolver.doResolve(
               target,
