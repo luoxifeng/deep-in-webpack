@@ -8,6 +8,7 @@ module.exports = class CurrentCtxAliasPlugin {
     this.source = 'normal-resolve'
     this.target = 'internal-resolve'
     this.alias = Object.entries(options.alias).map(([alias, value]) => ({ alias, value }))
+    this.log = options.log || false
   }
 
   apply(resolver) {
@@ -43,7 +44,7 @@ module.exports = class CurrentCtxAliasPlugin {
               `\n`,
             ].join('')
              
-            console.log(message)
+            this.log && console.log(message)
             resolver.doResolve(
               target,
               newRequest,
