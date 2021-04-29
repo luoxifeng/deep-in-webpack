@@ -21,8 +21,9 @@ module.exports = class CurrentCtxAliasPlugin {
         forEachBail(
           this.alias, 
           (item, callback) => {
-            
+            // 未匹配到配置的别名
             if (!requestStr.startsWith(item.alias)) return callback()
+            // 取别名后边的路径
             const remainingRequest = requestStr.substr(item.alias.length)
             const staticPath = item.value.replace(/\{\{.*/, '').replace(/(\/$)/, '')
             const relativePath = request.path.replace(staticPath, '').replace(/(^\/)|(\/$)/g, '')
