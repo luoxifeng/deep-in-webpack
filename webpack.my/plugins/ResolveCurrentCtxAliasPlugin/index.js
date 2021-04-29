@@ -1,4 +1,5 @@
 const { resolve } = require("path");
+const _resolve = require('enhanced-resolve');
 const forEachBail = require('enhanced-resolve/lib/forEachBail');
 
 module.exports = class CurrentCtxAliasPlugin {
@@ -19,21 +20,29 @@ module.exports = class CurrentCtxAliasPlugin {
 
         forEachBail(
           this.alias, 
-          (items, callback) => {
+          (item, callback) => {
             console.log(request, resolveContext, callback)
-            if (!requestStr.startsWith(items.alias)) return callback()
-            const remainingRequest = requestStr.substr(items.alias.length)
-            const staticPath = items.value.replace(/\{\{.*/, '').replace(/(\/$)/, '')
+            if (!requestStr.startsWith(item.alias)) return callback()
+            const remainingRequest = requestStr.substr(item.alias.length)
+            const staticPath = item.value.replace(/\{\{.*/, '').replace(/(\/$)/, '')
             const relativePath = request.path.replace(staticPath, '').replace(/(^\/)|(\/$)/g, '')
             const splitPath = relativePath.split(/\//)
-            requestStr = items.value.replace(/\{\{(\d+)\}\}/g, (_, k) => splitPath[k])
+            const currentContext = item.value.replace(/\{\{(\d+)\}\}/g, (_, k) => splitPath[k])
 
-            requestStr = resolve(requestStr, remainingRequest.startsWith('/') ? `.${remainingRequest}` : `./${remainingRequest}`)
+            requestStr = resolve(currentContext, remainingRequest.startsWith('/') ? `.${remainingRequest}` : `./${remainingRequest}`)
             const newRequest = {
               ...request,
               request: requestStr
             }
-            const message = ''
+
+            const message = [
+              `alias path '${request.request}' mapping info:`,
+              `\n  `,
+              `\n  context: '${currentContext}' \n  mapping: '${request.request}' -> '${requestStr}'`
+            ]
+             
+
+            console.log(message)
             resolver.doResolve(
               target,
               newRequest,
