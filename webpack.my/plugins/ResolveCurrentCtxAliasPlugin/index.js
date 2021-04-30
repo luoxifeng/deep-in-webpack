@@ -29,6 +29,7 @@ module.exports = class CurrentCtxAliasPlugin {
             const staticPath = item.value.replace(/\{\{.*/, '').replace(/(\/$)/, '')
             // 引用路径截掉静态路径后的路径
             const relativePath = request.path.replace(staticPath, '').replace(/(^\/)|(\/$)/g, '')
+            // 分割路径得到每一级路径
             const splitPath = relativePath.split(/\//)
             const currentContext = item.value.replace(/\{\{(\d+)\}\}/g, (_, k) => splitPath[k])
 
