@@ -25,7 +25,9 @@ module.exports = class CurrentCtxAliasPlugin {
             if (!requestStr.startsWith(item.alias)) return callback()
             // 取别名后边的路径
             const remainingRequest = requestStr.substr(item.alias.length)
+            // 静态路径
             const staticPath = item.value.replace(/\{\{.*/, '').replace(/(\/$)/, '')
+            // 引用路径截掉静态路径后的路径
             const relativePath = request.path.replace(staticPath, '').replace(/(^\/)|(\/$)/g, '')
             const splitPath = relativePath.split(/\//)
             const currentContext = item.value.replace(/\{\{(\d+)\}\}/g, (_, k) => splitPath[k])
