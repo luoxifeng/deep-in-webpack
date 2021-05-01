@@ -31,8 +31,9 @@ module.exports = class CurrentCtxAliasPlugin {
             const relativePath = request.path.replace(staticPath, '').replace(/(^\/)|(\/$)/g, '')
             // 分割路径得到每一级路径
             const splitPath = relativePath.split(/\//)
+            // 使用别名路径的上下文
             const currentContext = item.value.replace(/\{\{(\d+)\}\}/g, (_, k) => splitPath[k])
-
+            // 别名路径映射的真实路径
             requestStr = resolve(currentContext, remainingRequest.startsWith('/') ? `.${remainingRequest}` : `./${remainingRequest}`)
             const newRequest = {
               ...request,
@@ -63,5 +64,6 @@ module.exports = class CurrentCtxAliasPlugin {
           callback
         )
       })
+
   }
 }
