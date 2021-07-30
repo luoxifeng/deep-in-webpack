@@ -229,7 +229,7 @@ NormalModule {
   index: 0,
   index2: 0,
   depth: 0,
-  issuer: null,
+  issuer: null,// 重要概念，表示谁引用了当前模块
   profile: undefined,
   prefetched: false,
   built: true,
