@@ -22,7 +22,7 @@ const callback = (error, stats) => {
 
 
 let compiler = null;
-const devServer = 0;
+const devServer = 1;
 
 if (devServer) {
   compiler = webpack(config)

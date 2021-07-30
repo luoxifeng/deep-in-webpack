@@ -22,23 +22,24 @@ module.exports = {
   devtool: 'source-map',
   watch: true,
   entry: {
-    home: [
-      // './webpack.my/loaders/pre-loader/index.js!=!-!./src/home/deps.js', 
-      './packages/project1/src/pages/home/index.js'
-    ],
+    // home: [
+    //   // './webpack.my/loaders/pre-loader/index.js!=!-!./src/home/deps.js', 
+    //   './packages/project1/src/pages/home/index.js'
+    // ],
+    main: './packages/test.js'
     // list: './src/list/index.js'
   },
   stats: {
     // colors: true,
   },
   resolve: {
-    plugins: [
-      new ResolveCurrentCtxAliasPlugin({
-        alias: {
-          '@/current': `${resolve(__dirname, './packages/{{0}}/src/pages/{{3}}')}`
-        },
-      })
-    ]
+    // plugins: [
+    //   new ResolveCurrentCtxAliasPlugin({
+    //     alias: {
+    //       '@/current': `${resolve(__dirname, './packages/{{0}}/src/pages/{{3}}')}`
+    //     },
+    //   })
+    // ]
   },
   // target: 'web',
   output: {
@@ -87,58 +88,62 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.js$/,
-        use: [
-          requireMyLoader('test-loader')
-          // ,
-          // './webpack/loaders/dd-loader',
-        ]
-      },
-      {
-        test: /\.js$/,
-        enforce: "pre",
-        use: [
-          requireMyLoader('pre-loader')
-          // ,
-          // './webpack/loaders/dd-loader',
-        ]
-      },
-      {
-        test: /\.js$/,
-        enforce: "post",
-        use: [
-          {
-            loader: requireMyLoader('post-loader'),
-            options: {
-              ddd: 123
-            },
-          }
-          
-          // ,
-          // './webpack/loaders/dd-loader',
-        ]
-      },
       // {
       //   test: /\.js$/,
       //   use: [
-      //     {
-      //       loader: 'babel-loader',
-      //     }
+      //     requireMyLoader('test-loader')
+      //     // ,
+      //     // './webpack/loaders/dd-loader',
       //   ]
-      // }
+      // },
+      // {
+      //   test: /\.js$/,
+      //   enforce: "pre",
+      //   use: [
+      //     requireMyLoader('pre-loader')
+      //     // ,
+      //     // './webpack/loaders/dd-loader',
+      //   ]
+      // },
+      // {
+      //   test: /\.js$/,
+      //   enforce: "post",
+      //   use: [
+      //     {
+      //       loader: requireMyLoader('post-loader'),
+      //       options: {
+      //         ddd: 123
+      //       },
+      //     }
+          
+      //     // ,
+      //     // './webpack/loaders/dd-loader',
+      //   ]
+      // },
+      {
+        test: /\.js$/,
+        use: [
+          {
+            loader: requireMyLoader('pre-loader')
+          },
+          {
+            loader: 'babel-loader',
+            options: require('./.babelrc.js')
+          }
+        ]
+      }
     ]
   },
   plugins: [
-    new InjectPrependChunkPlugin(),
-    // new HtmlWebpackPlugin({
-    //   filename: 'index.html',
-    //   template: './index.html',
-    //   inject: true,
-    //   // externalScripts: {
-    //   //   inject: `<script>var g = 123</script>`,
-    //   // }
-    // }),
+    // new InjectPrependChunkPlugin(),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: './index.html',
+      inject: true,
+      // externalScripts: {
+      //   inject: `<script>var g = 123</script>`,
+      // }
+    }),
 
     new webpack.DefinePlugin({
       'testDefine': JSON.stringify(true)

@@ -10,7 +10,8 @@ module.exports = {
         // },
         targets: {
           "chrome": '78',
-        }
+        },
+        modules: 'amd'
       }
     ]
   ],
