@@ -15,9 +15,27 @@
 ```
 
 ## 动态import相关
+- __webpack_require__.f (Object)
+```
+
+__webpack_require__.f = {
+
+}
+
+```
+
 - __webpack_require__.e (Function)
+```js
+
+ 
+__webpack_require__.e = (chunkId) => {
+  return Promise.all(Object.keys(__webpack_require__.f).reduce((promises, key) => {
+    __webpack_require__.f[key](chunkId, promises);
+    return promises;
+  }, []));
+};
 ```
-```
+
 
 ## 热更新相关
 > 以 `h`, `hmr` 开头
