@@ -24,3 +24,8 @@
   - 函数内部会异步加载当前chunk的依赖项
   - 同时把异步加载的promise推入数组
 - 返回Promise.all，当resolve以后，当前chunk所依赖模块都已经准备好
+
+## __webpack_require__.f
+- j
+- remotes
+- consume
