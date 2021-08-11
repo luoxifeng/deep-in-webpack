@@ -26,6 +26,18 @@
 - 返回Promise.all，当resolve以后，当前chunk所依赖模块都已经准备好
 
 ## __webpack_require__.f
+
 - j
+```
+加载当前chunk
+```
+
 - remotes
+```
+加载远程chunk
+```
+
 - consume
+```
+加载模块联邦shared chunk
+```
