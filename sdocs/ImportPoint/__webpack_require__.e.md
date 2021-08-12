@@ -34,7 +34,7 @@
 
 - remotes
 ```
-加载远程chunk
+加载远程chunk，指当前项目模块联邦配置的remotes字段对应的chunk, 同时也是引用的其他项目模块联邦配置的expose对应的chunk
 ```
 
 - consume
