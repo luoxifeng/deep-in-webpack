@@ -1,7 +1,7 @@
-# \__webpack_require__.e, \__webpack_require__.f
+# \_\_webpack_require__.e, \_\_webpack_require__.f
 > 远程加载脚本，包括 `动态import` ,`模块联邦shared模块` 
 
-## __webpack_require__.e
+## \_\_webpack_require__.e
 - 代码实现
 ```js
 /* webpack/runtime/ensure chunk */
@@ -28,7 +28,7 @@
     - 同时把异步加载的promise推入数组
   - 返回Promise.all，当resolve以后，当前chunk所依赖模块都已经准备好
 
-## __webpack_require__.f
+## \_\_webpack_require__.f
 ```
 加载当前chunk
 ```
