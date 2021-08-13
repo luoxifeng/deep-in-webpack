@@ -1,5 +1,5 @@
 # \_\_webpack_require__.e, \_\_webpack_require__.f
-> 远程加载脚本，包括 `动态import` ,`模块联邦shared模块` 
+> `__webpack_require__.e`，`__webpack_require__.f` 两者是成对出现的，配合在一起，作用是动态加载脚本，包括 `动态import` ,`模块联邦shared模块` 
 
 ## \_\_webpack_require__.e
 - 代码实现
