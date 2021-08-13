@@ -1,12 +1,17 @@
 # \_\_webpack_require__.e, \_\_webpack_require__.f
-> `__webpack_require__.e`，`__webpack_require__.f` 两者是成对出现的，配合在一起，作用是动态加载脚本，包括 `动态import` ,`模块联邦shared模块` 
+`__webpack_require__.e`，`__webpack_require__.f` 两者是成对出现的，配合在一起，作用是动态加载脚本，包括 `动态import` ,`模块联邦shared模块` 
 
 ## \_\_webpack_require__.e
-- 代码实现
+`__webpack_require__.e` 可以看做是一个聚合执行器。它把加载一个 `chunk` 不同依赖项的逻辑聚合在一起执行，保证所有的依赖项都得到解决以后才会继续后续流程
+> 说明：具体依赖项的加载逻辑还是在各自的函数里（分而治之）
+
+### 代码实现
 ```js
 /* webpack/runtime/ensure chunk */
 (() => {
-  // 承载动态加载的模块
+  /**
+   * 承载chunk不同的依赖项
+   **/
   __webpack_require__.f = {};
 
   // 动态创建script，确保依赖加载完成，然后执行后续流程
@@ -21,7 +26,7 @@
 })();
 ```
 
-- 过程分析
+### 过程分析
   - 遍历__webpack_require__.f所有key值（j, consumes, remotes）
   - 依次执行key值对应的函数（传入当前chunkid, promises数组）
     - 函数内部会异步加载当前chunk的依赖项
