@@ -5,8 +5,10 @@
 ```js
 /* webpack/runtime/ensure chunk */
 (() => {
+  // 承载动态加载的模块
   __webpack_require__.f = {};
 
+  // 动态创建script，确保依赖加载完成，然后执行后续流程
   __webpack_require__.e = (chunkId) => {
     const _promises = Object.keys(__webpack_require__.f)
       .reduce((promises, key) => {
