@@ -34,16 +34,18 @@
   - 返回Promise.all，当resolve以后，当前chunk所依赖模块都已经准备好
 
 ## \_\_webpack_require__.f
+
+### \_\_webpack_require__.f.j
 ```
 加载当前chunk
 ```
 
-- remotes
+### \_\_webpack_require__.f.remotes
 ```
 加载远程chunk，指当前项目模块联邦配置的remotes字段对应的chunk, 同时也是引用的其他项目模块联邦配置的expose对应的chunk
 ```
 
-- consume
+### \_\_webpack_require__.f.consume
 ```
 加载模块联邦shared chunk
 ```
