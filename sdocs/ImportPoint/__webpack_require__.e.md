@@ -35,7 +35,7 @@
 
 ## \_\_webpack_require__.f
 
-### \_\_webpack_require__.f.j
+### \_\_webpack_require__.f.j (j指的是 jsonp)
 ```
 加载当前chunk
 ```
