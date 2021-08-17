@@ -135,3 +135,76 @@
 ```
 加载模块联邦shared chunk
 ```
+
+## \_\_webpack_require__.I
+```js
+(() => {
+	__webpack_require__.S = {};
+	var initPromises = {};
+	var initTokens = {};
+	__webpack_require__.I = (name, initScope) => {
+		if(!initScope) initScope = [];
+		// handling circular init calls
+		var initToken = initTokens[name];
+		if(!initToken) initToken = initTokens[name] = {};
+		if(initScope.indexOf(initToken) >= 0) return;
+		initScope.push(initToken);
+		// only runs once
+		if(initPromises[name]) return initPromises[name];
+		// creates a new share scope if needed
+		if(!__webpack_require__.o(__webpack_require__.S, name)) __webpack_require__.S[name] = {};
+		// runs all init snippets from all modules reachable
+		var scope = __webpack_require__.S[name];
+		var warn = (msg) => (typeof console !== "undefined" && console.warn && console.warn(msg));
+		var uniqueName = "@basic-host-remote/app1";
+		var register = (name, version, factory, eager) => {
+			var versions = scope[name] = scope[name] || {};
+			var activeVersion = versions[version];
+			if(!activeVersion || (!activeVersion.loaded && (!eager != !activeVersion.eager ? eager : uniqueName > activeVersion.from))) versions[version] = { get: factory, from: uniqueName, eager: !!eager };
+		};
+		var initExternal = (id) => {
+			var handleError = (err) => (warn("Initialization of sharing external failed: " + err));
+			try {
+        // 引用远程
+				var module = __webpack_require__(id);
+				if(!module) return;
+
+        // 初始化远程
+				var initFn = (module) => (module && module.init && module.init(__webpack_require__.S[name], initScope))
+
+        /**
+         * 无论是通过哪种方式获取远程上下文，此函数最终返回的都是promise
+         * 原因是：
+         *  remote应用可能存在与host应用相同的共享的模块(比如react...),
+         *  那么host应用此时是不能确定是否使用自身的shared模块
+         *  所以调用了 initExternal 去拉取remote，同时创建了promise来控制shared module的加载
+         *  当远程模块 init 以后, 也就是注册shared module 以后会继续流程，
+         *  此时host就可以根据版本号等信息确定要使用哪个来源的共享模块了
+         * */
+        // 这里如果是通过__webpack_require__.l请求的返回的promise, 
+				if(module.then) return promises.push(module.then(initFn, handleError));
+
+        // 如果是远程脚本已经注入到html，返回的就是远程到处的上下文 { init, get }
+				var initResult = initFn(module);
+				if(initResult && initResult.then) return promises.push(initResult.catch(handleError));
+			} catch(err) { handleError(err); }
+		}
+		var promises = [];
+		switch(name) {
+			case "default": {
+				register("react-dom", "16.14.0", () => (Promise.all([__webpack_require__.e("vendors-node_modules_react-dom_index_js"), __webpack_require__.e("webpack_sharing_consume_default_react_react")]).then(() => (() => (__webpack_require__(/*! ../node_modules/react-dom/index.js */ "../node_modules/react-dom/index.js"))))));
+				register("react", "16.14.0", () => (Promise.all([__webpack_require__.e("vendors-node_modules_react_index_js"), __webpack_require__.e("node_modules_object-assign_index_js-node_modules_prop-types_checkPropTypes_js")]).then(() => (() => (__webpack_require__(/*! ../node_modules/react/index.js */ "../node_modules/react/index.js"))))));
+				initExternal("webpack/container/reference/app2");
+			}
+			break;
+		}
+ 
+		if(!promises.length) return initPromises[name] = 1;
+
+    /**
+     * 远程模块初始化以后 promises 会被resolve,继续流程
+     * */
+		return initPromises[name] = Promise.all(promises).then(() => (initPromises[name] = 1));
+	};
+})();
+```
