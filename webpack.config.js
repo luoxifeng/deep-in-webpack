@@ -2,6 +2,8 @@ const { resolve } = require('path');
 const chalk = require('chalk');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const { Vu} = require('vue-loader');
+
 const requireDocPlugin = plugin => require(`./sdocs/PLugins/${plugin}`)
 const requireMyPlugin = target => require(`./webpack.my/plugins/${target}`)
 const requireMyLoader = target => resolve(`./webpack.my/loaders/${target}`)
@@ -123,15 +125,24 @@ module.exports = {
       {
         test: /\.js$/,
         use: [
-          {
-            loader: requireMyLoader('pre-loader')
-          },
+          // {
+          //   loader: requireMyLoader('pre-loader')
+          // },
           {
             loader: 'babel-loader',
             options: require('./.babelrc.js')
           }
         ]
-      }
+      },
+      // {
+      //   test: /\.vue$/,
+      //   use: [
+      //     {
+      //       loader: 'vue-loader',
+      //       // options: 
+      //     }
+      //   ]
+      // }
     ]
   },
   plugins: [
