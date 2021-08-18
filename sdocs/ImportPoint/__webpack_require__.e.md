@@ -136,7 +136,7 @@
 加载模块联邦shared chunk
 ```
 
-## \_\_webpack_require__.I
+## \_\_webpack_require__.I (初始化共享模块)
 ```js
 (() => {
 	__webpack_require__.S = {};
@@ -160,7 +160,10 @@
 		var register = (name, version, factory, eager) => {
 			var versions = scope[name] = scope[name] || {};
 			var activeVersion = versions[version];
-			if(!activeVersion || (!activeVersion.loaded && (!eager != !activeVersion.eager ? eager : uniqueName > activeVersion.from))) versions[version] = { get: factory, from: uniqueName, eager: !!eager };
+			if(!activeVersion || (!activeVersion.loaded && (!eager != !activeVersion.eager ? eager : uniqueName > activeVersion.from))) {
+        versions[version] = { get: factory, from: uniqueName, eager: !!eager };
+      }
+        
 		};
 		var initExternal = (id) => {
 			var handleError = (err) => (warn("Initialization of sharing external failed: " + err));
