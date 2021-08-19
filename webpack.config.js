@@ -11,6 +11,8 @@ const requireMyLoader = target => resolve(`./webpack.my/loaders/${target}`)
 const { WebpackManifestPlugin } = requireDocPlugin('webpack-manifest-plugin');
 const InjectPrependChunkPlugin = requireMyPlugin('InjectPrependChunkPlugin');
 const ResolveCurrentCtxAliasPlugin = requireMyPlugin('ResolveCurrentCtxAliasPlugin');
+const IgnorePlugin = requireMyPlugin('IgnorePlugin');
+
 
 
 const port = 5000
@@ -56,18 +58,18 @@ module.exports = {
     // chunkLoadingGlobal: 'myCustomFunc'
     // library: '__MY_LIB__'
   },
-  experiments: {
-    lazyCompilation: {
-      imports: true,
-      entries: false,
-    },
-  },
+  // experiments: {
+  //   lazyCompilation: {
+  //     imports: true,
+  //     entries: false,
+  //   },
+  // },
   devServer: {
     writeToDisk: true,
     headers: {
       'Access-Control-Allow-Origin': '*',
     },
-    open: false,
+    open: true,
     // hotOnly: true,
     hot: true,
     // index: 'index.html',
@@ -146,6 +148,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new IgnorePlugin(),
     // new InjectPrependChunkPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
