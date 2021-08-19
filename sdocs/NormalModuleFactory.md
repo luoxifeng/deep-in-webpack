@@ -33,25 +33,102 @@
       compiler: undefined
     }
     ```
-  - issuer  
+  - issuer （释义：发行者， 发行人）
     指的是引用 `当前模块` 的 `那个模块` 的 `绝对路径`，简单点说也就是指当前模块之所以会加入构建流程中的原因，因为有`其他模块`用了此模块，这里 `其他模块` 的绝对路径就是 `issuer`。\
+   
+    ```js
+    // a1.js
+    import b from './b'
+
+    // a2.js
+    import b from './b'
+
+    // b.js
+    export default {
+      b: 123
+    }
+
+    /**
+     * 上述代码 a1， a2 都引用 b, NormalModuleFactory 在处理到 b.js 的时候
+     * 如果是通过处理 a1 依赖过来的，那么此时 issuer 的值就是 a1.js 的绝对路径
+     * 如果是通过处理 a2 依赖过来的，那么此时 issuer 的值就是 a2.js 的绝对路径
+     */
+
+    ```
+
     > 注意：
       <br>1.由于入口文件是没有被`其他模块`引用的，所以 `issuer` 是空的。
       <br>2.如果一个模块被多个模块引用，那么根据依赖链进入 `NormalModuleFactory.hooks.xxxx` 时，得到的上下文信息是不一样的, `issuer`也就不一样
-    
-### resolveData.dependencies （当前模块的`被依赖项`）
-指的是当前模块所关联的依赖，注意并不是指当前模块引用了其他模块而产生的依赖，而是指当前模块的 `引用者` 是以什么形式引用此模块而产生的依赖。指的是 `上游（模块以什么形式引用的当前模块）` 而不是 `下游（当前模块以什么形式引用其他模块）`。
-比如以下代码
+
+### resolveData.request （当前模块在父模块中被引用的原始写法)
 ```js
-// a.js
+// a1.js
 import b from './b'
+
+// a2.js
+import b from './b.js'
 
 // b.js
 export default {
   b: 123
 }
+
+/**
+ * 上述代码 a1， a2 都引用 b, NormalModuleFactory 在处理到 b 的时候
+ * 如果是通过处理 a1 依赖过来的，request 的值就是 "./b"
+ * 如果是通过处理 a2 依赖过来的，request 的值就是 "./b.js"
+ **/
 ```
 
+
+### resolveData.dependencyType （当前模块在父模块中被引用的方式）
+
+```js
+// a1.js
+import b from './b' // 通过 esm 形式引用
+
+// a2.js
+require('./b') // 通过 commonjs 形式引用
+
+// b.js
+export default {
+  b: 123
+}
+
+/**
+ * 上述代码 a1， a2 都引用 b, NormalModuleFactory 在处理到 b 的时候
+ * 如果是通过处理 a1 依赖过来的，dependencyType 的值就是 "esm"
+ * 如果是通过处理 a2 依赖过来的，dependencyType 的值就是 "commonjs"
+ **/
+```
+
+
+### resolveData.dependencies （当前模块在父模块中被引用时所产生的依赖）
+指的是当前模块所关联的依赖，注意并不是指当前模块引用了其他模块而产生的依赖，而是指当前模块的 `引用者` 是以什么形式引用此模块而产生的依赖。
+<br>指的是 `上游（模块以什么形式引用的当前模块）` 而不是 `下游（当前模块以什么形式引用其他模块）`。
+<br>比如以下代码
+
+```js
+// a1.js
+import b from './b' // 会被处理成 HarmonyImportSideEffectDependency 依赖
+
+// a2.js
+const b = require('./b') // 会被处理成 CommonJsRequireDependency 依赖
+
+// b.js
+export default {
+  b: 123
+}
+
+/**
+ * 上述代码 a1， a2 都引用 b, NormalModuleFactory 在处理到 b 的时候
+ * 如果是通过处理 a1 依赖过来的，dependencies 的值就是 [HarmonyImportSideEffectDependency]
+ * 表明父模块是通过 import 引用的当前模块，当前模块是作为父模块 HarmonyImportSideEffectDependency 而存在的
+ * 
+ * 如果是通过处理 a2 依赖过来的，dependencies 的值就是 [CommonJsRequireDependency]
+ * 表明父模块是通过 require 引用的当前模块，当前模块是作为父模块 CommonJsRequireDependency 而存在的
+ **/
+```
   
 ### resolveData.resolveOptions 
 ```js
