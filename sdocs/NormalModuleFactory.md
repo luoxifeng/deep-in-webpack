@@ -33,7 +33,7 @@
       compiler: undefined
     }
     ```
-  - issuer （释义：发行者， 发行人）
+  - issuer （释义：发行者， 发行人）  
     指的是引用 `当前模块` 的 `那个模块` 的 `绝对路径`，简单点说也就是指当前模块之所以会加入构建流程中的原因，因为有`其他模块`用了此模块，这里 `其他模块` 的绝对路径就是 `issuer`。\
    
     ```js
@@ -56,9 +56,7 @@
 
     ```
 
-    > 注意：
-      <br>1.由于入口文件是没有被`其他模块`引用的，所以 `issuer` 是空的。
-      <br>2.如果一个模块被多个模块引用，那么根据依赖链进入 `NormalModuleFactory.hooks.xxxx` 时，得到的上下文信息是不一样的, `issuer`也就不一样
+    > 注意：.由于入口文件是没有被`其他模块`引用的，所以 `issuer` 是空的。
 
 ### resolveData.request （当前模块在父模块中被引用的原始写法)
 ```js
@@ -110,10 +108,10 @@ export default {
 
 ```js
 // a1.js
-import b from './b' // 会被处理成 HarmonyImportSideEffectDependency 依赖
+import b from './b' // 会被处理成 HarmonyImportSideEffectDependency 存在 a1模块的 dependencies 中
 
 // a2.js
-const b = require('./b') // 会被处理成 CommonJsRequireDependency 依赖
+const b = require('./b') // 会被处理成 CommonJsRequireDependency 存在 a2模块的 dependencies 中
 
 // b.js
 export default {
