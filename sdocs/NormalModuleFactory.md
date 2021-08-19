@@ -149,10 +149,17 @@ export default {
   compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory }) => {
     normalModuleFactory.hooks.beforeResolve.tapAsync('XXX', (resolveData, callback) => {
       /**
-       * 此时只是在处理依赖的时候，
+       * 此时已经处理完父模块，准备处理父模块的依赖项，但是还没有解析模块的真实路径，
+       * 也没有创建模块，所以关于模块本身的信息很少，能得到的信息是关于当前模块与父模块的引用关系，依赖关系等，
+       * 下面这些变量有值，当然根据这些变量是可以得到父模块的一些信息
+       * resolveData.request
+       * resolveData.contextInfo
+       * resolveData.dependencyType
+       * resolveData.dependencies
+       * 此钩子一般用来
        **/
-      if (/xxx\.js/.test(resolveData.request)) {
-        callback(null, false)
+      if (/xxx/.test(resolveData.request)) {
+        return callback(null, false)
       }
       callback()
     })

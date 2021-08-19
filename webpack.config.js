@@ -2,7 +2,7 @@ const { resolve } = require('path');
 const chalk = require('chalk');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
-const { Vu} = require('vue-loader');
+// const { Vu} = require('vue-loader');
 
 const requireDocPlugin = plugin => require(`./sdocs/PLugins/${plugin}`)
 const requireMyPlugin = target => require(`./webpack.my/plugins/${target}`)
@@ -149,6 +149,9 @@ module.exports = {
   },
   plugins: [
     new IgnorePlugin(),
+    // new webpack.IgnorePlugin({
+    //   resourceRegExp: /test2/
+    // }),
     // new InjectPrependChunkPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
