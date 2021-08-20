@@ -69,7 +69,7 @@ module.exports = {
     headers: {
       'Access-Control-Allow-Origin': '*',
     },
-    open: true,
+    open: !true,
     // hotOnly: true,
     hot: true,
     // index: 'index.html',

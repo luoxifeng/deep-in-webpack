@@ -112,6 +112,7 @@ import b from './b' // 会被处理成 HarmonyImportSideEffectDependency 存在 
 
 // a2.js
 const b = require('./b') // 会被处理成 CommonJsRequireDependency 存在 a2模块的 dependencies 中
+console.log(b, '====') // 会被处理成 HarmonyImportSpecifierDependency 存在 a2模块的 dependencies 中
 
 // b.js
 export default {
@@ -121,10 +122,8 @@ export default {
 /**
  * 上述代码 a1， a2 都引用 b, NormalModuleFactory 在处理到 b 的时候
  * 如果是通过处理 a1 依赖过来的，dependencies 的值就是 [HarmonyImportSideEffectDependency]
- * 表明父模块是通过 import 引用的当前模块，当前模块是作为父模块 HarmonyImportSideEffectDependency 而存在的
  * 
- * 如果是通过处理 a2 依赖过来的，dependencies 的值就是 [CommonJsRequireDependency]
- * 表明父模块是通过 require 引用的当前模块，当前模块是作为父模块 CommonJsRequireDependency 而存在的
+ * 如果是通过处理 a2 依赖过来的，dependencies 的值就是 [CommonJsRequireDependency, HarmonyImportSpecifierDependency]
  **/
 ```
   
@@ -142,28 +141,30 @@ export default {
 
 ## hooks
 
-- beforeResolve
-  > 当遇到新的依赖项请求时调用。可以通过返回 false 来忽略依赖项
+### beforeResolve
+> 当遇到新的依赖项请求时调用。可以通过返回 false 来忽略依赖项
 
-  ```js
-  compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory }) => {
-    normalModuleFactory.hooks.beforeResolve.tapAsync('XXX', (resolveData, callback) => {
-      /**
-       * 此时已经处理完父模块，准备处理父模块的依赖项，但是还没有解析模块的真实路径，
-       * 也没有创建模块，所以关于模块本身的信息很少，能得到的信息是关于当前模块与父模块的引用关系，依赖关系等，
-       * 下面这些变量有值，当然根据这些变量是可以得到父模块的一些信息
-       * resolveData.request
-       * resolveData.contextInfo
-       * resolveData.dependencyType
-       * resolveData.dependencies
-       * 此钩子一般用来
-       **/
-      if (/xxx/.test(resolveData.request)) {
-        return callback(null, false)
-      }
-      callback()
-    })
+```js
+compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory }) => {
+  normalModuleFactory.hooks.beforeResolve.tapAsync('XXX', (resolveData, callback) => {
+    /**
+     * 此时已经处理完父模块，准备处理父模块的依赖项，但是还没有解析模块的真实路径，
+     * 也没有创建模块，所以关于模块本身的信息很少，能得到的信息是关于当前模块与父模块的引用关系，依赖关系等，
+     * 下面这些变量有值，当然根据这些变量是可以得到父模块的一些信息
+     * resolveData.request
+     * resolveData.contextInfo
+     * resolveData.dependencyType
+     * resolveData.dependencies
+     * 此钩子一般用来
+     **/
+    if (/xxx/.test(resolveData.request)) {
+      return callback(null, false)
+    }
+    callback()
   })
-  ```
+})
+```
 
-- 
+> 当遇到新的依赖项请求时调用。可以通过返回 false 来忽略依赖项
+
+- resolve
