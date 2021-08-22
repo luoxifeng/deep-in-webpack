@@ -109,10 +109,11 @@ export default {
 ```js
 // a1.js
 import b from './b' // 会被处理成 HarmonyImportSideEffectDependency 存在 a1模块的 dependencies 中
+console.log(b, '====') // 会被处理成 HarmonyImportSpecifierDependency 存在 a1模块的 dependencies 中
+
 
 // a2.js
 const b = require('./b') // 会被处理成 CommonJsRequireDependency 存在 a2模块的 dependencies 中
-console.log(b, '====') // 会被处理成 HarmonyImportSpecifierDependency 存在 a2模块的 dependencies 中
 
 // b.js
 export default {
@@ -136,8 +137,6 @@ export default {
 ```js
 
 ```
-
-
 
 ## hooks
 
