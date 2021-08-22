@@ -165,6 +165,8 @@ compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory })
 })
 ```
 
-> 当遇到新的依赖项请求时调用。可以通过返回 false 来忽略依赖项
+- factorize
 
 - resolve
+- resolveForScheme
+- afterResolve

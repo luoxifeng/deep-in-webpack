@@ -2,6 +2,7 @@ const { resolve } = require('path');
 const chalk = require('chalk');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const path = require('path');
 // const { Vu} = require('vue-loader');
 
 const requireDocPlugin = plugin => require(`./sdocs/PLugins/${plugin}`)
@@ -146,6 +147,11 @@ module.exports = {
       //   ]
       // }
     ]
+  },
+  resolve: {
+    alias: {
+      '@/': path.resolve(__dirname)
+    }
   },
   plugins: [
     new IgnorePlugin(),
