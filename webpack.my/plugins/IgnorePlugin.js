@@ -5,8 +5,13 @@ module.exports = class IgnorePlugin {
   }
 
   apply(compiler) {
-    compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory, contextModuleFactory }) => {
-      normalModuleFactory.hooks.beforeResolve.tapAsync('XXX', (resolveData, callback) => {
+    compiler.hooks.thisCompilation.tap("XXX", (compilation, { 
+      normalModuleFactory,
+      contextModuleFactory 
+    }) => {
+      const nmf = normalModuleFactory
+
+      nmf.hooks.beforeResolve.tapAsync('XXX', (resolveData, callback) => {
         console.log(resolveData)
         if (/test2/.test(resolveData.request)) {
           resolveData.dependencies.forEach((dep, i) => {
@@ -28,20 +33,32 @@ module.exports = class IgnorePlugin {
         callback()
       })
 
-      normalModuleFactory.hooks.resolve.tapAsync('XXX', (resolveData, callback) => {
-        if (/test2/.test(resolveData.request)) {
-          console.log(resolveData, 'test2 resolve')
-
-          // const index = dep._parentModule.dependencies.findIndex(t => t === dep)
-          // if (index > -1) {
-          //   dep._parentModule.dependencies.splice(index, 1)
-          // }
-          // return callback(null, false)
-        }
-        callback()
+      /**
+       * factorize
+       */
+      nmf.hooks.factorize.tap('XXX', (resolveData) => {
+        console.log(resolveData)
       })
 
-      normalModuleFactory.hooks.parser
+      /**
+       * resolve
+       */
+      nmf.hooks.resolve.tap('XXX', resolveData => {
+        console.log(resolveData, 'test2 resolve')
+      })
+
+      /**
+       * resolveForScheme 
+       */
+
+      /**
+       * afterResolve
+       */
+      nmf.hooks.afterResolve.tap('XXX', (resolveData) => {
+        console.log(resolveData)
+      })
+
+      nmf.hooks.parser
         .for('javascript/auto')
         .tap('MyPlugin', (parser, options) => {
           parser.hooks.import.tap('mmm', (statement, source) => {

@@ -169,3 +169,23 @@ compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory })
 - resolve
 - resolveForScheme
 - afterResolve
+- createModule
+> 在创建 NormalModule 实例之前调用，此时还没有创建实例
+
+```js
+compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory }) => {
+  normalModuleFactory.hooks.createModule.tap('XXX', (createData, resolveData) => {
+    /**
+     * 此时并没有创建module实例
+     * 如果返回一个module实例，接下来讲不会使用webpack默认创建的实例
+     * 一般用来根据 createData 的信息来创建一个新的module替换的默认module
+     * 如果是想对原始module，做一层包装，那么需要在 normalModuleFactory.hooks.module 返回新的module
+     * 因为 createModule 一般还没有创建module实例（除非我们自己或者其他插件监听了此钩子创建了实例）
+     * 所以要是想对原来模块进行包装还是在 normalModuleFactory.hooks.module 里面去做
+     */
+
+    return new XXXModule(createData)
+  })
+})
+
+```
