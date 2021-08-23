@@ -58,6 +58,14 @@ module.exports = class IgnorePlugin {
         console.log(resolveData)
       })
 
+
+      /**
+       * afterResolve
+       */
+       nmf.hooks.createModule.tap('XXX', (createData, resolveData) => {
+        console.log(resolveData)
+      })
+
       nmf.hooks.parser
         .for('javascript/auto')
         .tap('MyPlugin', (parser, options) => {

@@ -133,9 +133,28 @@ export default {
 
 ```
 
-### resolveData.createData （当前模块创建的信息）
-```js
+## createData （当前模块创建的信息，等于 `resolveData.createData`）
+> 创建一个module所需要的信息, 从 `normalModuleFactory.hooks.afterResolve` 开始才有值，因为经过resolve之后，已经解析出文件的上下文，真实路径，loader信息等创建一个 `normalModule`所需信息，为了方便都聚
 
+```js
+{
+  context: '/Users/deep-in-webpack/packages', // 文件上下文
+  generator: JavascriptGenerator, // 模块生成器，后面流程会使用它来生成模块代码
+  generatorOptions: undefined, // 生成器配置
+  layer: null,
+  loaders: [{…}], // 当前文件将要使用的loader, 已经经过解析排序过滤过的
+  matchResource: undefined,
+  parser: JavascriptParser, // 模块parser，后面流程会使用它来解析模块内容，来分析当前模块的依赖（类似babel）
+  parserOptions: undefined, // parser配置
+  rawRequest: './packages/test.js', // 原生请求字符串，书写在文件中的原始字符串，一般是相对路径，或者是带别名的
+  request: '/Users/deep-in-webpack/node_modules/babel-loader/lib/index.js??ruleSet[1].rules[0].use[0]!/Users/deep-in-webpack/packages/test.js', // 请求处理路径，表示当前模块经过loader的过程(右 -> 左，以 ！分割)
+  resolveOptions: undefined, // 解析模块的配置
+  resource: '/Users/deep-in-webpack/packages/test.js', // 当前模块的资源路径
+  resourceResolveData: {…}, // 模块解析出来的信息，包好文件绝对路径，上下文等，
+  settings: {}
+  type: 'javascript/auto', // 模块类型, parser的钩子会用到 parser.hooks.for('javascript/auto')
+  userRequest: '/Users/deep-in-webpack/packages/test.js', // 模块经过解析的绝对路径
+}
 ```
 
 ## hooks
@@ -175,6 +194,7 @@ compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory })
 ```js
 compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory }) => {
   normalModuleFactory.hooks.createModule.tap('XXX', (createData, resolveData) => {
+    // resolveData.createData === createData， 为了方便 createData 单独穿了进来
     /**
      * 此时并没有创建module实例
      * 如果返回一个module实例，接下来讲不会使用webpack默认创建的实例
