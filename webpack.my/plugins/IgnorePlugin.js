@@ -14,14 +14,14 @@ module.exports = class IgnorePlugin {
       nmf.hooks.beforeResolve.tapAsync('XXX', (resolveData, callback) => {
         console.log(resolveData)
         if (/test2/.test(resolveData.request)) {
-          resolveData.dependencies.forEach((dep, i) => {
-            if (i) {
-              dep._parentModule.removeDependency(dep)
-              console.log(dep)
-            } else {
-              // 
-            }
-          })
+          // resolveData.dependencies.forEach((dep, i) => {
+          //   if (i) {
+          //     dep._parentModule.removeDependency(dep)
+          //     console.log(dep)
+          //   } else {
+          //     // 
+          //   }
+          // })
           // setTimeout(() => {
           //   compilation.moduleGraph.getModule(resolveData.dependencies[1]) 
           // }, 5 * 1000)
@@ -58,12 +58,31 @@ module.exports = class IgnorePlugin {
         console.log(resolveData)
       })
 
-
       /**
-       * afterResolve
+       * createModule
        */
-       nmf.hooks.createModule.tap('XXX', (createData, resolveData) => {
-        console.log(resolveData)
+      nmf.hooks.createModule.tap('XXX', (createData, resolveData) => {
+        if (/test2/.test(resolveData.request)) {
+          console.log(resolveData)
+        }
+      })
+
+      // nmf.hooks.createGenerator
+      //   .for('asset')
+      //   .tap('XXX', (createData, resolveData) => {
+      //   if (/test2/.test(resolveData.request)) {
+      //     console.log(resolveData)
+      //   }
+      // })
+
+      
+      /**
+       * module
+       */
+      nmf.hooks.module.tap('XXX', (module, createData, resolveData) => {
+        if (/test2/.test(resolveData.request)) {
+          console.log(resolveData)
+        }
       })
 
       nmf.hooks.parser

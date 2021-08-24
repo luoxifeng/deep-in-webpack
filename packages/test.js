@@ -1,5 +1,7 @@
-import s3 from './test3.js';
+// import s3 from './test3.js';
 import kk from './test2';
+
+export const foo = 123
 
 const hh = kk
 
