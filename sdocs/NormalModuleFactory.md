@@ -216,9 +216,26 @@ compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory })
      * 因为 createModule 一般还没有创建module实例（除非我们自己或者其他插件监听了此钩子创建了实例）
      * 所以要是想对原来模块进行包装还是在 normalModuleFactory.hooks.module 里面去做
      */
-
+    // 替换原始模块
     return new XXXModule(createData)
   })
 })
+```
 
+### module
+> 在创建 NormalModule 实例后调用
+
+```js
+compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory }) => {
+  normalModuleFactory.hooks.module.tap('XXX', (module createData resolveData) => {
+    /**
+     * 在createModule钩子里，如果返回了自定义的模块
+     * 那么这里的module就是指createModule钩子里面返回的，
+     * 如果 createModule 没有返回，则会调用 new NormalModule
+     * 那么这里的module指的就是默认创建的module
+     * 这种方式一般应用在对原始module进行包装，又需要保留原始module的场景下
+     */
+    return new XXXModule(module)
+  })
+})
 ```
