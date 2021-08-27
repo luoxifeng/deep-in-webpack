@@ -239,3 +239,21 @@ compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory })
   })
 })
 ```
+
+### createParser
+
+### parser
+
+```js
+compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory }) => {
+  normalModuleFactory.hooks.parser
+    .for('javascript/auto')
+    .tap('MyPlugin', (parser, options) => {
+      parser.hooks.import.tap('MyPlugin', (statement, source) => {
+        console.log(statement, source)
+      })
+    });
+})
+```
+
+
