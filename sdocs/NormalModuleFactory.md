@@ -243,6 +243,8 @@ compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory })
 ### createParser
 
 ### parser
+> 当前模块被loader处理完成之后，webpack会对编译后的代码进行解析来分析当前模块的依赖，
+> 我们可以监听代码的解析的钩子做一些操作
 
 ```js
 compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory }) => {
