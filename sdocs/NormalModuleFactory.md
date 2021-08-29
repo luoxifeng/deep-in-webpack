@@ -173,7 +173,7 @@ compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory })
      * resolveData.contextInfo
      * resolveData.dependencyType
      * resolveData.dependencies
-     * 此钩子一般用来
+     * 此钩子一般用来忽略某个模块
      **/
     if (/xxx/.test(resolveData.request)) {
       return callback(null, false)
