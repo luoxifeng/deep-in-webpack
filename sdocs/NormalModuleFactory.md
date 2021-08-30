@@ -241,6 +241,17 @@ compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory })
 ```
 
 ### createParser
+```js
+compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory }) => {
+  normalModuleFactory.hooks.createParser
+    .for('javascript/auto')
+    .tap('MyPlugin', (parser, options) => {
+      // 返回一个解析器, 一般情况下不需要
+      // 除非自定义解析器
+      return XXXXParser()
+    });
+})
+```
 
 ### parser
 > 当前模块被loader处理完成之后，webpack会对编译后的代码进行解析来分析当前模块的依赖，
