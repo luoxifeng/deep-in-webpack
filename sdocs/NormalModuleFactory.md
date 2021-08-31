@@ -185,8 +185,9 @@ compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory })
 
 ### factorize
 
-- resolve
-- resolveForScheme
+### resolve
+
+### resolveForScheme
 ### afterResolve
 > 已经解析出当前模块的路径信息，loader信息，以及创建模块所需要的 `createData`，下一步就准备开始创建 `module` 流程了
 ```js
@@ -268,5 +269,10 @@ compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory })
     });
 })
 ```
+
+### createGenerator
+
+### generator
+
 
 
