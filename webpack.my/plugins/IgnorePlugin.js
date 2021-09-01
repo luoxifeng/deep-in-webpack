@@ -55,7 +55,10 @@ module.exports = class IgnorePlugin {
        * afterResolve
        */
       nmf.hooks.afterResolve.tap('XXX', (resolveData) => {
-        console.log(resolveData)
+        // if (//) {
+
+        // }
+        // console.log(resolveData)
       })
 
       /**

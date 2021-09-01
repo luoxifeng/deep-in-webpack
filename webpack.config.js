@@ -13,6 +13,7 @@ const { WebpackManifestPlugin } = requireDocPlugin('webpack-manifest-plugin');
 const InjectPrependChunkPlugin = requireMyPlugin('InjectPrependChunkPlugin');
 const ResolveCurrentCtxAliasPlugin = requireMyPlugin('ResolveCurrentCtxAliasPlugin');
 const IgnorePlugin = requireMyPlugin('IgnorePlugin');
+const NormalModuleReplacementPlugin = require('./webpack/lib/NormalModuleReplacementPlugin')
 
 
 
@@ -154,6 +155,12 @@ module.exports = {
     }
   },
   plugins: [
+    new webpack.BannerPlugin({
+      // test: /packages\/test4\.dev/,
+      banner:
+        'fullhash:[fullhash], chunkhash:[chunkhash], name:[name], filebase:[filebase], query:[query], file:[file]',
+    }),
+    new NormalModuleReplacementPlugin(/packages\/test4\.dev/, './test4.pro.js'),
     new IgnorePlugin(),
     // new webpack.IgnorePlugin({
     //   resourceRegExp: /test2/

@@ -160,28 +160,39 @@ export default {
 ## hooks
 
 ### beforeResolve
-> 当遇到新的依赖项请求时调用。可以通过返回 false 来忽略依赖项
+- 原理解析
+  > 当遇到新的依赖项请求时调用。可以通过返回 false 来忽略依赖项
 
-```js
-compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory }) => {
-  normalModuleFactory.hooks.beforeResolve.tapAsync('XXX', (resolveData, callback) => {
-    /**
-     * 此时已经处理完父模块，准备处理父模块的依赖项，但是还没有解析模块的真实路径，
-     * 也没有创建模块，所以关于模块本身的信息很少，能得到的信息是关于当前模块与父模块的引用关系，依赖关系等，
-     * 下面这些变量有值，当然根据这些变量是可以得到父模块的一些信息
-     * resolveData.request
-     * resolveData.contextInfo
-     * resolveData.dependencyType
-     * resolveData.dependencies
-     * 此钩子一般用来忽略某个模块
-     **/
-    if (/xxx/.test(resolveData.request)) {
-      return callback(null, false)
-    }
-    callback()
+  ```js
+  compiler.hooks.thisCompilation.tap("XXX", (compilation, { normalModuleFactory }) => {
+    normalModuleFactory.hooks.beforeResolve.tapAsync('XXX', (resolveData, callback) => {
+      /**
+       * 此时已经处理完父模块，准备处理父模块的依赖项，但是还没有解析模块的真实路径，
+       * 也没有创建模块，所以关于模块本身的信息很少，能得到的信息是关于当前模块与父模块的引用关系，依赖关系等，
+       * 下面这些变量有值，当然根据这些变量是可以得到父模块的一些信息
+       * resolveData.request
+       * resolveData.contextInfo
+       * resolveData.dependencyType
+       * resolveData.dependencies
+       **/
+
+      // 此钩子一般用来忽略某个模块，返回 false 参考 webpack/lib/IgnorePlugin.js
+      if (/xxx/.test(resolveData.request)) {
+        return callback(null, false)
+      }
+
+      // 或者在特定环境下更改resolveData.request使用其他模块来替换当前模块 参考 webpack/lib/NormalModuleReplacementPlugin.js
+      if (/xxx/.test(resolveData.request)) {
+        resolveData.request = './xxx/kkk/js'
+      }
+
+      callback()
+    })
   })
-})
-```
+  ```
+- 用法场景参考
+  - [webpack/lib/IgnorePlugin.js](../webpack/lib/IgnorePlugin.js)
+  - [webpack/lib/NormalModuleReplacementPlugin.js](../webpack/lib/NormalModuleReplacementPlugin.js)
 
 ### factorize
 
