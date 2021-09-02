@@ -13,6 +13,11 @@ const { WebpackManifestPlugin } = requireDocPlugin('webpack-manifest-plugin');
 const InjectPrependChunkPlugin = requireMyPlugin('InjectPrependChunkPlugin');
 const ResolveCurrentCtxAliasPlugin = requireMyPlugin('ResolveCurrentCtxAliasPlugin');
 const IgnorePlugin = requireMyPlugin('IgnorePlugin');
+
+/**
+ * 源码分析
+ */
+const BannerPlugin = require('./webpack/lib/BannerPlugin')
 const NormalModuleReplacementPlugin = require('./webpack/lib/NormalModuleReplacementPlugin')
 
 
@@ -155,7 +160,7 @@ module.exports = {
     }
   },
   plugins: [
-    new webpack.BannerPlugin({
+    new BannerPlugin({
       // test: /packages\/test4\.dev/,
       banner:
         'fullhash:[fullhash], chunkhash:[chunkhash], name:[name], filebase:[filebase], query:[query], file:[file]',
