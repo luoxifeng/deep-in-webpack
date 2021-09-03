@@ -20,8 +20,6 @@ const IgnorePlugin = requireMyPlugin('IgnorePlugin');
 const BannerPlugin = require('./webpack/lib/BannerPlugin')
 const NormalModuleReplacementPlugin = require('./webpack/lib/NormalModuleReplacementPlugin')
 
-
-
 const port = 5000
 
 /**
@@ -161,12 +159,12 @@ module.exports = {
   },
   plugins: [
     new BannerPlugin({
-      // test: /packages\/test4\.dev/,
+      test: /packages\/test4\.dev/,
       banner:
         'fullhash:[fullhash], chunkhash:[chunkhash], name:[name], filebase:[filebase], query:[query], file:[file]',
     }),
-    new NormalModuleReplacementPlugin(/packages\/test4\.dev/, './test4.pro.js'),
-    new IgnorePlugin(),
+    // new NormalModuleReplacementPlugin(/packages\/test4\.dev/, './test4.pro.js'),
+    // new IgnorePlugin(),
     // new webpack.IgnorePlugin({
     //   resourceRegExp: /test2/
     // }),
