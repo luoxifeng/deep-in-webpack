@@ -64,6 +64,7 @@ class NormalModuleReplacementPlugin {
 							) {
 								createData.resource = newResource;
 							} else {
+// 如果传入的是相对地址，根据原始模块的所在目录作为参照，拼接模块的绝对路径
 								createData.resource = join(
 									fs,
 									dirname(fs, createData.resource),
