@@ -102,6 +102,10 @@ class BannerPlugin {
 
 							const comment = compilation.getPath(banner, data);
 
+							/**
+							 * 更新要输出的资源
+							 * compilation.updateAsset
+							 */
 							compilation.updateAsset(
 								file,
 								old => new ConcatSource(comment, "\n", old)
