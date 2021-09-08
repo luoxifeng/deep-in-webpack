@@ -2,7 +2,7 @@
 import kk from './test2';
 import s3 from './test3?1122211';
 
-import llll from './test4.dev?lll=11125552221';
+import llll from './test4.dev?lll=1112555222221';
 
 
 export const foo = 123
