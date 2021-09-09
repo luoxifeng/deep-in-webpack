@@ -63,7 +63,7 @@ class NormalModuleReplacementPlugin {
 							 */
 							if (
 								newResource.startsWith("/") ||
-								(newResource.length > 1 && newResource[1] === ":")
+								(newResource.length > 1 && newResource[1] === ":") // window 带盘符
 							) {
 								createData.resource = newResource;
 							} else {
