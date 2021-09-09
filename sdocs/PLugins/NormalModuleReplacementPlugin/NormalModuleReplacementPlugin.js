@@ -58,6 +58,9 @@ class NormalModuleReplacementPlugin {
 							newResource(result);
 						} else {
 							const fs = compiler.inputFileSystem;
+							/**
+							 * 兼容不同的绝对路径
+							 */
 							if (
 								newResource.startsWith("/") ||
 								(newResource.length > 1 && newResource[1] === ":")
